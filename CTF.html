@@ -101,26 +101,61 @@
     </div>
 
     <script>
-        // 深色模式切換邏輯
-        const btn = document.getElementById('theme-btn');
-        const html = document.documentElement;
+        // 文章資料庫
+        const postData = {
+            'sqli': {
+                title: "Lord of SQLInjection: los.rubiya (Gremlin)",
+                date: "2025年3月30日",
+                content: `
+                    <p>這是 SQLI 的入門，目標是讓 Query 恆真。</p>
+                    <pre style="background:var(--border); padding:15px; border-radius:8px; overflow-x:auto;"><code>$query = "select id from prob_gremlin where id='{$_GET[id]}' and pw='{$_GET[pw]}'";</code></pre>
+                    <p><strong>Payload:</strong> <code>?id=admin' or 1=1 -- </code></p>
+                    <p>重點在於使用單引號閉合並用 <code>--</code> 註解掉後方內容。</p>`
+            },
+            'design': {
+                title: "為什麼我選擇簡約設計？",
+                date: "2024年3月15日",
+                content: `<p>簡約設計能減少視覺噪音，讓內容說話。透過 CSS 變數，我們能輕鬆達成深淺色切換...</p>`
+            }
+        };
 
-        // 檢查瀏覽器上次儲存的設定
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            html.setAttribute('data-theme', 'dark');
-            btn.innerText = '☀️ 淺色模式';
+        const listView = document.getElementById('list-view');
+        const articleView = document.getElementById('article-view');
+        const articleContent = document.getElementById('article-content');
+
+        // 顯示文章
+        function showArticle(id) {
+            const post = postData[id];
+            if (!post) return;
+
+            articleContent.innerHTML = `
+                <h1 style="font-size: 2.5rem; color:var(--accent);">${post.title}</h1>
+                <div style="color: #999; margin-bottom: 20px;">${post.date}</div>
+                <hr style="border: 0; border-top: 1px solid var(--border); margin-bottom: 30px;">
+                <div style="line-height: 1.8; font-size: 1.1rem;">${post.content}</div>
+            `;
+
+            listView.style.display = 'none';
+            articleView.style.display = 'block';
+            window.scrollTo(0, 0); // 回到頂部
         }
 
+        // 返回列表
+        function showList() {
+            articleView.style.display = 'none';
+            listView.style.display = 'block';
+        }
+
+        // 原有的深色模式邏輯 (保留)
+        const btn = document.getElementById('theme-btn');
+        const html = document.documentElement;
         btn.addEventListener('click', () => {
             if (html.getAttribute('data-theme') === 'dark') {
                 html.removeAttribute('data-theme');
                 btn.innerText = '🌙 深色模式';
-                localStorage.setItem('theme', 'light');
             } else {
                 html.setAttribute('data-theme', 'dark');
                 btn.innerText = '☀️ 淺色模式';
-                localStorage.setItem('theme', 'dark');
             }
         });
     </script>
