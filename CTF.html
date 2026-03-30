@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dougan's Blog</title>
+    <style>
+        /* 顏色變數設定 */
+        :root {
+            --bg: #f4f7f6; --header-bg: #fff; --text: #333; --card: #fff; --border: #eee; --accent: #3498db;
+        }
+        /* 深色模式顏色設定 */
+        [data-theme="dark"] {
+            --bg: #181a1b; --header-bg: #242627; --text: #e8e6e3; --card: #242627; --border: #3c4143; --accent: #5dade2;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.3s; }
+        body { font-family: "PingFang TC", "Heiti TC", sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+        /* 導覽列 */
+        header { background: var(--header-bg); border-bottom: 1px solid var(--border); padding: 1rem 10%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--accent); text-decoration: none; }
+        
+        /* 切換按鈕 */
+        #theme-btn { cursor: pointer; padding: 6px 12px; border-radius: 20px; border: 1px solid var(--accent); background: transparent; color: var(--accent); font-size: 0.85rem; font-weight: bold; }
+        #theme-btn:hover { background: var(--accent); color: #fff; }
+
+        /* 英雄區 */
+        .hero { background: #2c3e50; color: #fff; padding: 80px 10%; text-align: center; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .hero p { opacity: 0.8; font-weight: 300; }
+
+        /* 內容佈局 */
+        .container { display: grid; grid-template-columns: 2.5fr 1fr; gap: 30px; padding: 40px 10%; max-width: 1200px; margin: 0 auto; }
+
+        /* 文章與側邊欄卡片 */
+        .post-card, aside { background: var(--card); padding: 30px; border-radius: 12px; margin-bottom: 25px; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .post-date { font-size: 0.85rem; color: #999; margin-bottom: 10px; }
+        .post-card h2 { margin-bottom: 15px; color: var(--accent); }
+        .read-more { color: var(--accent); text-decoration: none; font-weight: bold; display: inline-block; margin-top: 15px; }
+
+        /* 側邊欄列表 */
+        .categories { list-style: none; margin-top: 15px; }
+        .categories li { padding: 10px 0; border-bottom: 1px solid var(--border); }
+        .categories a { text-decoration: none; color: var(--text); opacity: 0.8; font-size: 0.95rem; }
+        .categories a:hover { opacity: 1; color: var(--accent); }
+
+        /* 手機版適應 */
+        @media (max-width: 850px) {
+            .container { grid-template-columns: 1fr; padding: 20px 5%; }
+            header { padding: 1rem 5%; }
+            .hero { padding: 60px 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">Dougan Blog</a>
+        <button id="theme-btn">🌙 切換模式</button>
+    </header>
+
+    <section class="hero">
+        <h1>歡迎來到我的創作空間</h1>
+        <p>記錄生活、技術與靈感的集散地</p>
+    </section>
+
+    <div class="container">
+        <!-- 主要文章區 -->
+        <main>
+            <article class="post-card">
+                <div class="post-date">2024年3月20日</div>
+                <h2>探索 GitHub Pages 的無限可能</h2>
+                <p>這是一個極簡的部落格模板，去除了繁瑣的留言板，專注於內容呈現。支援響應式佈局與深色模式切換...</p>
+                <a href="#" class="read-more">繼續閱讀 →</a>
+            </article>
+
+            <article class="post-card">
+                <div class="post-date">2024年3月15日</div>
+                <h2>為什麼我選擇簡約設計？</h2>
+                <p>在資訊爆炸的時代，乾淨的介面能讓讀者更專注於文字本身。這份 HTML 程式碼完全不依賴外部資料庫...</p>
+                <a href="#" class="read-more">繼續閱讀 →</a>
+            </article>
+        </main>
+
+        <!-- 側邊欄 -->
+        <aside>
+            <h3>分類標籤</h3>
+            <ul class="categories">
+                <li><a href="#"># 技術筆記</a></li>
+                <li><a href="#"># 生活隨筆</a></li>
+                <li><a href="#"># 漏洞專區</a></li>
+                <li><a href="#"># CTF</a></li>
+            </ul>
+            <br>
+            <h3>關於作者</h3>
+            <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">
+                我是 Dougan，一名喜歡分享與創作的開發者。
+            </p>
+        </aside>
+    </div>
+
+    <script>
+        // 深色模式切換邏輯
+        const btn = document.getElementById('theme-btn');
+        const html = document.documentElement;
+
+        // 檢查瀏覽器上次儲存的設定
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            btn.innerText = '☀️ 淺色模式';
+        }
+
+        btn.addEventListener('click', () => {
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.removeAttribute('data-theme');
+                btn.innerText = '🌙 深色模式';
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                btn.innerText = '☀️ 淺色模式';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
+</body>
+</html>
