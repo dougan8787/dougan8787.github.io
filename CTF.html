@@ -3,182 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dougan's Blog</title>
+    <title>Dougan's Blog - CTF Note</title>
     <style>
-        /* 顏色變數設定 */
         :root {
-            --bg: #f4f7f6; --header-bg: #fff; --text: #333; --card: #fff; --border: #eee; --accent: #3498db;
+            --bg: #f4f7f6; --header-bg: #fff; --text: #333; --card: #fff; --border: #eee; --accent: #3498db; --code: #f8f9fa;
         }
-        /* 深色模式顏色設定 */
         [data-theme="dark"] {
-            --bg: #181a1b; --header-bg: #242627; --text: #e8e6e3; --card: #242627; --border: #3c4143; --accent: #5dade2;
+            --bg: #181a1b; --header-bg: #242627; --text: #e8e6e3; --card: #242627; --border: #3c4143; --accent: #5dade2; --code: #2d2f31;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.3s; }
-        body { font-family: "PingFang TC", "Heiti TC", sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        body { font-family: "PingFang TC", sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
 
-        /* 導覽列 */
         header { background: var(--header-bg); border-bottom: 1px solid var(--border); padding: 1rem 10%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--accent); text-decoration: none; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--accent); text-decoration: none; cursor: pointer; }
         
-        /* 切換按鈕 */
-        #theme-btn { cursor: pointer; padding: 6px 12px; border-radius: 20px; border: 1px solid var(--accent); background: transparent; color: var(--accent); font-size: 0.85rem; font-weight: bold; }
-        #theme-btn:hover { background: var(--accent); color: #fff; }
+        #theme-btn { cursor: pointer; padding: 6px 12px; border-radius: 20px; border: 1px solid var(--accent); background: transparent; color: var(--accent); font-weight: bold; }
 
-        /* 英雄區 */
-        .hero { background: #2c3e50; color: #fff; padding: 80px 10%; text-align: center; }
-        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
-        .hero p { opacity: 0.8; font-weight: 300; }
-
-        /* 內容佈局 */
+        .hero { background: #2c3e50; color: #fff; padding: 60px 10%; text-align: center; }
         .container { display: grid; grid-template-columns: 2.5fr 1fr; gap: 30px; padding: 40px 10%; max-width: 1200px; margin: 0 auto; }
 
-        /* 文章與側邊欄卡片 */
-        .post-card, aside { background: var(--card); padding: 30px; border-radius: 12px; margin-bottom: 25px; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .post-date { font-size: 0.85rem; color: #999; margin-bottom: 10px; }
-        .post-card h2 { margin-bottom: 15px; color: var(--accent); }
-        .read-more { color: var(--accent); text-decoration: none; font-weight: bold; display: inline-block; margin-top: 15px; }
+        .post-card, aside, .article-box { background: var(--card); padding: 30px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 25px; }
+        .read-more, .nav-btn { color: var(--accent); text-decoration: none; font-weight: bold; cursor: pointer; display: inline-block; margin-top: 15px; }
 
-        /* 側邊欄列表 */
-        .categories { list-style: none; margin-top: 15px; }
-        .categories li { padding: 10px 0; border-bottom: 1px solid var(--border); }
-        .categories a { text-decoration: none; color: var(--text); opacity: 0.8; font-size: 0.95rem; }
-        .categories a:hover { opacity: 1; color: var(--accent); }
+        /* 文章內頁專用樣式 */
+        #article-view { max-width: 800px; margin: 40px auto; display: none; padding: 0 20px; }
+        pre { background: var(--code); padding: 15px; border-radius: 8px; overflow-x: auto; border: 1px solid var(--border); margin: 15px 0; }
+        .nav-area { display: flex; justify-content: space-between; margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border); }
 
-        /* 手機版適應 */
-        @media (max-width: 850px) {
-            .container { grid-template-columns: 1fr; padding: 20px 5%; }
-            header { padding: 1rem 5%; }
-            .hero { padding: 60px 5%; }
-        }
+        @media (max-width: 850px) { .container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="#" class="logo">Dougan Blog</a>
+        <div class="logo" onclick="showList()">Dougan Blog</div>
         <button id="theme-btn">🌙 切換模式</button>
     </header>
 
-    <section class="hero">
-        <h1>歡迎來到我的創作空間</h1>
-        <p>記錄生活、技術與靈感的集散地</p>
-    </section>
+    <!-- 1. 列表視圖 -->
+    <div id="list-view">
+        <section class="hero">
+            <h1>歡迎來到我的創作空間</h1>
+            <p>記錄生活、技術與靈感的集散地</p>
+        </section>
 
-    <div class="container">
-        <!-- 主要文章區 -->
-        <main>
-                <!-- 文章 1 -->
+        <div class="container">
+            <main>
                 <article class="post-card">
-                    <div class="post-date">2025年3月30日</div>
-                    <h2>los.rubiya</h2>
-                    <p>Lord of SQLInjection 的第一關：Gremlin。這關主要測試最基礎的 SQL Injection 繞過技巧...</p>
-                    <!-- 傳入 ID 決定顯示哪篇內容 -->
-                    <a href="javascript:void(0)" class="read-more" onclick="showArticle('sqli')">繼續閱讀 →</a>
-                    <div id="article-content"></div> 
+                    <div style="color:#999; font-size:0.8rem;">2025年3月30日</div>
+                    <h2>Lord of SQLInjection: los.rubiya</h2>
+                    <p>這是一系列關於 SQL Injection 的解題紀錄，從基礎的 Gremlin 開始...</p>
+                    <a class="read-more" onclick="showArticle('sqli', 1)">繼續閱讀 →</a>
                 </article>
-            <article class="post-card">
-                <div class="post-date">2024年3月15日</div>
-                <h2>為什麼我選擇簡約設計？</h2>
-                <p>在資訊爆炸的時代，乾淨的介面能讓讀者更專注於文字本身。這份 HTML 程式碼完全不依賴外部資料庫...</p>
-                <a href="#" class="read-more">繼續閱讀 →</a>
-            </article>
-        </main>
 
-        <!-- 側邊欄 -->
-        <aside>
-            <h3>分類標籤</h3>
-            <ul class="categories">
-                <li><a href="#"># 技術筆記</a></li>
-                <li><a href="#"># 生活隨筆</a></li>
-                <li><a href="#"># 漏洞專區</a></li>
-                <li><a href="#"># CTF</a></li>
-            </ul>
-            <br>
-            <h3>關於作者</h3>
-            <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">
-                我是 Dougan，一名喜歡分享與創作的開發者。
-            </p>
-        </aside>
+                <article class="post-card">
+                    <div style="color:#999; font-size:0.8rem;">2024年3月15日</div>
+                    <h2>為什麼我選擇簡約設計？</h2>
+                    <p>在資訊爆炸的時代，乾淨的介面能讓讀者更專注於文字本身...</p>
+                    <a class="read-more" onclick="showArticle('design', 1)">繼續閱讀 →</a>
+                </article>
+            </main>
+
+            <aside>
+                <h3>分類標籤</h3>
+                <p style="margin-top:10px; opacity:0.8;"># 技術筆記<br># CTF<br># 漏洞專區</p>
+            </aside>
+        </div>
     </div>
-    <!-- 文章詳細內容頁面：預設隱藏 -->
-    <div id="article-view" style="display: none; padding: 40px 10%; max-width: 800px; margin: 0 auto;">
-        <button onclick="showList()" style="background:none; border:none; color:var(--accent); cursor:pointer; font-weight:bold; margin-bottom:20px;">← 返回列表</button>
-        
-        <!-- 文章內容容器 -->
-        <div id="article-content"></div>
 
-        <!-- 分頁導覽按鈕 -->
-        <div id="article-nav" style="margin-top: 40px; display: flex; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 20px;">
-            <!-- 由 JS 動態生成按鈕 -->
+    <!-- 2. 文章視圖 (預設隱藏) -->
+    <div id="article-view">
+        <div class="nav-btn" onclick="showList()">← 返回列表</div>
+        <div class="article-box">
+            <div id="article-content">
+                <!-- 內容由 JS 注入 -->
+            </div>
+            <div class="nav-area" id="article-nav">
+                <!-- 分頁按鈕由 JS 注入 -->
+            </div>
         </div>
     </div>
 
     <script>
-    // 文章資料庫：將長文章拆成 p1, p2...
-    const postData = {
-        'sqli_p1': {
-            title: "los.rubiya (第一頁)",
-            content: `<p>這是第一頁的內容：介紹 Gremlin 關卡...</p><pre><code>' or 1=1 -- </code></pre>`,
-            next: 'sqli_p2',
-            prev: null
-        },
-        'sqli_p2': {
-            title: "los.rubiya (第二頁)",
-            content: `<p>這是第二頁的內容：進階的繞過技巧與過濾器...</p>`,
-            next: null,
-            prev: 'sqli_p1'
+        // 文章數據庫 (支援分頁)
+        const postData = {
+            'sqli': {
+                1: {
+                    title: "los.rubiya - 第一頁：基礎概念",
+                    content: `<p>Gremlin 關卡是 LOB 的起點。源碼如下：</p><pre><code>$query = "select id from prob_gremlin where id='{$_GET[id]}' and pw='{$_GET[pw]}'";</code></pre><p>我們只需讓 Query 恆真即可繞過。</p>`
+                },
+                2: {
+                    title: "los.rubiya - 第二頁：進階繞過",
+                    content: `<p>當 <code>'</code> 被過濾時，我們可以使用 hex 或其他編碼方式...</p><pre><code>admin' # -> admin%27%23</code></pre><p>這是進階頁面的內容演示。</p>`
+                }
+            },
+            'design': {
+                1: {
+                    title: "為什麼我選擇簡約設計？",
+                    content: `<p>簡約不代表簡單。它是一種專注於核心價值的設計哲學。</p>`
+                }
+            }
+        };
+
+        const listView = document.getElementById('list-view');
+        const articleView = document.getElementById('article-view');
+        const articleContent = document.getElementById('article-content');
+        const articleNav = document.getElementById('article-nav');
+
+        // 顯示文章功能
+        function showArticle(postId, page) {
+            const post = postData[postId] && postData[postId][page];
+            if (!post) return;
+
+            // 隱藏列表，顯示文章
+            listView.style.display = 'none';
+            articleView.style.display = 'block';
+
+            // 注入內容
+            articleContent.innerHTML = `
+                <h1 style="color:var(--accent); margin-bottom:10px;">${post.title}</h1>
+                <hr style="border:0; border-top:1px solid var(--border); margin-bottom:20px;">
+                <div style="font-size:1.1rem; line-height:1.8;">${post.content}</div>
+            `;
+
+            // 處理分頁按鈕
+            let navHtml = '';
+            // 上一頁按鈕
+            if (page > 1) {
+                navHtml += `<span class="nav-btn" onclick="showArticle('${postId}', ${page - 1})">← 上一頁</span>`;
+            } else {
+                navHtml += `<span></span>`;
+            }
+            // 下一頁按鈕
+            if (postData[postId][page + 1]) {
+                navHtml += `<span class="nav-btn" onclick="showArticle('${postId}', ${page + 1})">下一頁 →</span>`;
+            } else {
+                navHtml += `<span></span>`;
+            }
+            articleNav.innerHTML = navHtml;
+            window.scrollTo(0, 0);
         }
-    };
 
-    const listView = document.getElementById('list-view');
-    const articleView = document.getElementById('article-view');
-    const articleContent = document.getElementById('article-content');
-    const articleNav = document.getElementById('article-nav');
-
-    function showArticle(id) {
-        const post = postData[id];
-        if (!post) return;
-
-        // 1. 隱藏列表，顯示文章區
-        listView.style.display = 'none';
-        articleView.style.display = 'block';
-
-        // 2. 填充內容
-        articleContent.innerHTML = `
-            <h1 style="font-size: 2rem; color:var(--accent);">${post.title}</h1>
-            <div style="line-height: 1.8; margin-top: 20px;">${post.content}</div>
-        `;
-
-        // 3. 處理分頁按鈕
-        let navHtml = '';
-        if (post.prev) navHtml += `<button onclick="showArticle('${post.prev}')" style="color:var(--accent); cursor:pointer; background:none; border:1px solid var(--accent); padding:5px 10px; border-radius:5px;">← 上一頁</button>`;
-        else navHtml += `<span></span>`; // 佔位
-
-        if (post.next) navHtml += `<button onclick="showArticle('${post.next}')" style="color:var(--accent); cursor:pointer; background:none; border:1px solid var(--accent); padding:5px 10px; border-radius:5px;">下一頁 →</button>`;
-        
-        articleNav.innerHTML = navHtml;
-        window.scrollTo(0, 0);
-    }
-
-    function showList() {
-        articleView.style.display = 'none';
-        listView.style.display = 'block';
-    }
-
-    // (保留你原本的深色模式切換邏輯...)
-    const btn = document.getElementById('theme-btn');
-    const html = document.documentElement;
-    btn.addEventListener('click', () => {
-    if (html.getAttribute('data-theme') === 'dark') {
-           html.removeAttribute('data-theme');
-           btn.innerText = '🌙 深色模式';
-    } else {
-            html.setAttribute('data-theme', 'dark');
-            btn.innerText = '☀️ 淺色模式';
+        // 返回列表功能
+        function showList() {
+            articleView.style.display = 'none';
+            listView.style.display = 'block';
+            window.scrollTo(0, 0);
         }
-    });    
-</script>
-        
+
+        // 深色模式切換
+        const btn = document.getElementById('theme-btn');
+        const html = document.documentElement;
+        btn.addEventListener('click', () => {
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.removeAttribute('data-theme');
+                btn.innerText = '🌙 深色模式';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                btn.innerText = '☀️ 淺色模式';
+            }
+        });
+    </script>
 </body>
 </html>
