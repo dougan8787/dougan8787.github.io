@@ -101,6 +101,18 @@
             </p>
         </aside>
     </div>
+    <!-- 文章詳細內容頁面：預設隱藏 -->
+    <div id="article-view" style="display: none; padding: 40px 10%; max-width: 800px; margin: 0 auto;">
+        <button onclick="showList()" style="background:none; border:none; color:var(--accent); cursor:pointer; font-weight:bold; margin-bottom:20px;">← 返回列表</button>
+        
+        <!-- 文章內容容器 -->
+        <div id="article-content"></div>
+
+        <!-- 分頁導覽按鈕 -->
+        <div id="article-nav" style="margin-top: 40px; display: flex; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 20px;">
+            <!-- 由 JS 動態生成按鈕 -->
+        </div>
+    </div>
 
     <script>
     // 文章資料庫：將長文章拆成 p1, p2...
