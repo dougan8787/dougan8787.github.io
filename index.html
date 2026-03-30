@@ -1,131 +1,633 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-Hant" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dougan's Blog</title>
-    <style>
-        /* 顏色變數設定 */
-        :root {
-            --bg: #f4f7f6; --header-bg: #fff; --text: #333; --card: #fff; --border: #eee; --accent: #3498db;
-        }
-        /* 深色模式顏色設定 */
-        [data-theme="dark"] {
-            --bg: #181a1b; --header-bg: #242627; --text: #e8e6e3; --card: #242627; --border: #3c4143; --accent: #5dade2;
-        }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>DOUGAN // TERMINAL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--cyan:#00f5ff;--green:#39ff14;--trans:.35s cubic-bezier(.4,0,.2,1);}
+[data-theme="dark"]{
+  --bg:#050a0e;--bg2:#0a1520;--bg3:#0d1f2d;
+  --surface:rgba(10,25,40,.88);
+  --border:rgba(0,245,255,.1);--border2:rgba(0,245,255,.22);
+  --text:#c8dce8;--text2:#5a8a9f;
+  --accent:#00f5ff;--accent2:#39ff14;
+  --glow:0 0 18px rgba(0,245,255,.3);--glow2:0 0 18px rgba(57,255,20,.25);
+  --grid:rgba(0,245,255,.04);
+}
+[data-theme="light"]{
+  --bg:#eef4f8;--bg2:#deeaf2;--bg3:#f5f9fc;
+  --surface:rgba(240,250,255,.9);
+  --border:rgba(0,120,160,.13);--border2:rgba(0,120,160,.3);
+  --text:#0d2535;--text2:#4a7a92;
+  --accent:#006fa8;--accent2:#007a40;
+  --glow:0 0 16px rgba(0,110,168,.18);--glow2:0 0 16px rgba(0,122,64,.16);
+  --grid:rgba(0,120,160,.05);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Noto Sans TC",sans-serif;
+  background:var(--bg);color:var(--text);
+  line-height:1.7;overflow-x:hidden;
+  transition:background var(--trans),color var(--trans);
+  cursor:crosshair;
+}
+a{text-decoration:none;color:inherit;}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:40px 40px;pointer-events:none;z-index:0;
+  transition:background var(--trans);
+}
+[data-theme="dark"] body::after{
+  content:'';position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.04) 2px,rgba(0,0,0,.04) 4px);
+  pointer-events:none;z-index:0;
+}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.3s; }
-        body { font-family: "PingFang TC", "Heiti TC", sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+/* HEADER */
+header{
+  position:sticky;top:0;z-index:100;
+  background:var(--surface);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border2);
+  padding:0 clamp(1.2rem,6%,5rem);height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background var(--trans),border-color var(--trans);
+}
+header::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--accent) 30%,var(--accent2) 70%,transparent);
+  transition:background var(--trans);
+}
+.logo{
+  font-family:"Share Tech Mono",monospace;font-size:1.05rem;
+  color:var(--accent);letter-spacing:.1em;
+  display:flex;align-items:center;gap:.5rem;
+  text-shadow:var(--glow);transition:color var(--trans),text-shadow var(--trans);
+}
+.logo-br{opacity:.45;}
+.cursor{
+  display:inline-block;width:2px;height:.95rem;
+  background:var(--accent);margin-left:1px;
+  animation:blink .8s step-end infinite;transition:background var(--trans);
+}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+nav.desk{display:flex;gap:2rem;align-items:center;}
+nav.desk a{
+  font-family:"Share Tech Mono",monospace;font-size:.7rem;
+  letter-spacing:.12em;color:var(--text2);text-transform:uppercase;
+  position:relative;transition:color .2s;
+}
+nav.desk a::before{content:attr(data-n);position:absolute;left:-16px;font-size:.58rem;color:var(--accent);opacity:.55;}
+nav.desk a:hover{color:var(--accent);text-shadow:var(--glow);}
+.h-right{display:flex;align-items:center;gap:.7rem;}
+.theme-btn{
+  cursor:pointer;background:none;border:1px solid var(--border2);
+  padding:4px 13px;font-family:"Share Tech Mono",monospace;font-size:.62rem;
+  letter-spacing:.1em;color:var(--text2);
+  display:flex;align-items:center;gap:.5rem;
+  transition:all .2s;
+}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:var(--glow);}
+.menu-btn{
+  display:none;background:none;border:1px solid var(--border2);
+  padding:4px 10px;cursor:pointer;color:var(--text);
+  font-family:"Share Tech Mono",monospace;font-size:.72rem;
+  transition:border-color .2s,color var(--trans);
+}
+.menu-btn:hover{border-color:var(--accent);color:var(--accent);}
 
-        /* 導覽列 */
-        header { background: var(--header-bg); border-bottom: 1px solid var(--border); padding: 1rem 10%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--accent); text-decoration: none; }
-        
-        /* 切換按鈕 */
-        #theme-btn { cursor: pointer; padding: 6px 12px; border-radius: 20px; border: 1px solid var(--accent); background: transparent; color: var(--accent); font-size: 0.85rem; font-weight: bold; }
-        #theme-btn:hover { background: var(--accent); color: #fff; }
+/* MOB NAV */
+.mob-nav{
+  display:none;position:fixed;inset:0;
+  background:var(--bg);z-index:200;
+  padding:5rem 2rem 2rem;flex-direction:column;gap:1.5rem;
+  transition:background var(--trans);
+}
+.mob-nav.open{display:flex;}
+.mob-nav a{
+  font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1.9rem;
+  color:var(--text);border-bottom:1px solid var(--border);padding-bottom:.8rem;
+  transition:color .2s,border-color var(--trans);
+}
+.mob-nav a:hover{color:var(--accent);}
+.mob-close{
+  position:absolute;top:1rem;right:1.5rem;
+  background:none;border:none;font-size:1.6rem;
+  cursor:pointer;color:var(--text2);transition:color var(--trans);
+}
 
-        /* 英雄區 */
-        .hero { background: #2c3e50; color: #fff; padding: 80px 10%; text-align: center; }
-        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
-        .hero p { opacity: 0.8; font-weight: 300; }
+/* HERO */
+.hero{
+  position:relative;z-index:1;
+  padding:clamp(3.5rem,9vw,7rem) clamp(1.2rem,6%,5rem) clamp(2.5rem,6vw,5rem);
+  overflow:hidden;
+}
+.hero-frame{position:absolute;border-style:solid;transition:border-color var(--trans);}
+.tl{top:20px;left:20px;width:48px;height:48px;border-width:1px 0 0 1px;border-color:var(--accent2);opacity:.4;}
+.br{bottom:20px;right:20px;width:48px;height:48px;border-width:0 1px 1px 0;border-color:var(--accent2);opacity:.4;}
+.hero-lbl{
+  font-family:"Share Tech Mono",monospace;font-size:.68rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent2);margin-bottom:1.4rem;min-height:1.2rem;
+  text-shadow:var(--glow2);transition:color var(--trans),text-shadow var(--trans);
+  opacity:0;animation:fadeUp .4s .1s forwards;
+}
+.hero h1{
+  font-family:"Rajdhani",sans-serif;font-weight:700;
+  font-size:clamp(2.8rem,6vw,5rem);line-height:1.05;letter-spacing:-.02em;
+  color:var(--text);opacity:0;animation:fadeUp .5s .2s forwards;transition:color var(--trans);
+}
+.hero h1 .hl{
+  color:var(--accent);text-shadow:var(--glow);
+  transition:color var(--trans),text-shadow var(--trans);
+}
+.hero-sub{
+  margin-top:1.2rem;font-family:"Share Tech Mono",monospace;font-size:.8rem;
+  color:var(--text2);max-width:500px;
+  opacity:0;animation:fadeUp .5s .35s forwards;transition:color var(--trans);
+}
+.prompt{color:var(--accent2);margin-right:.4rem;transition:color var(--trans);}
+.hero-stats{
+  display:flex;gap:3rem;margin-top:2.5rem;padding-top:2rem;
+  border-top:1px solid var(--border);
+  opacity:0;animation:fadeUp .5s .5s forwards;transition:border-color var(--trans);
+}
+.stat .num{
+  font-family:"Rajdhani",sans-serif;font-weight:700;font-size:2rem;
+  color:var(--accent);text-shadow:var(--glow);line-height:1;
+  transition:color var(--trans),text-shadow var(--trans);
+}
+.stat .lbl{
+  font-family:"Share Tech Mono",monospace;font-size:.6rem;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text2);margin-top:.2rem;transition:color var(--trans);
+}
+.hex-deco{
+  position:absolute;right:8%;top:50%;transform:translateY(-50%);
+  pointer-events:none;opacity:0;animation:fadeIn .8s .7s forwards;
+}
+@keyframes spinSlow{to{transform:rotate(360deg);}}
+.hex-ring{animation:spinSlow 24s linear infinite;transform-origin:110px 110px;}
+@media(max-width:900px){.hex-deco{display:none;}}
 
-        /* 內容佈局 */
-        .container { display: grid; grid-template-columns: 2.5fr 1fr; gap: 30px; padding: 40px 10%; max-width: 1200px; margin: 0 auto; }
+/* WRAP */
+.wrap{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:minmax(0,1fr) 260px;
+  gap:2rem;padding:2rem clamp(1.2rem,6%,5rem) 4rem;
+  max-width:1280px;margin:0 auto;
+}
+@media(max-width:950px){.wrap{grid-template-columns:1fr;}}
 
-        /* 文章與側邊欄卡片 */
-        .post-card, aside { background: var(--card); padding: 30px; border-radius: 12px; margin-bottom: 25px; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .post-date { font-size: 0.85rem; color: #999; margin-bottom: 10px; }
-        .post-card h2 { margin-bottom: 15px; color: var(--accent); }
-        .read-more { color: var(--accent); text-decoration: none; font-weight: bold; display: inline-block; margin-top: 15px; }
+/* SEC HEAD */
+.sec-head{display:flex;align-items:center;gap:.7rem;margin-bottom:1.5rem;}
+.sec-head .sn{font-family:"Share Tech Mono",monospace;font-size:.62rem;color:var(--accent);transition:color var(--trans);}
+.sec-head h2{
+  font-family:"Share Tech Mono",monospace;font-size:.7rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--text2);transition:color var(--trans);
+}
+.sec-head::after{content:'';flex:1;height:1px;background:var(--border);transition:background var(--trans);}
 
-        /* 側邊欄列表 */
-        .categories { list-style: none; margin-top: 15px; }
-        .categories li { padding: 10px 0; border-bottom: 1px solid var(--border); }
-        .categories a { text-decoration: none; color: var(--text); opacity: 0.8; font-size: 0.95rem; }
-        .categories a:hover { opacity: 1; color: var(--accent); }
+/* FEATURED */
+.featured{
+  display:grid;grid-template-columns:1fr 1.2fr;
+  border:1px solid var(--border2);margin-bottom:2rem;overflow:hidden;
+  opacity:0;animation:fadeUp .6s .4s forwards;
+  transition:border-color .25s,box-shadow .25s;
+}
+.featured:hover{border-color:var(--accent);box-shadow:var(--glow);}
+.feat-vis{
+  background:var(--bg3);position:relative;min-height:230px;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;transition:background var(--trans);
+}
+.feat-vis::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,245,255,.06),transparent 55%),
+             linear-gradient(225deg,rgba(57,255,20,.04),transparent 55%);
+}
+.ckt{position:absolute;inset:0;}
+.ckt line{stroke:var(--border2);stroke-width:.5;transition:stroke var(--trans);}
+.feat-badge{
+  position:absolute;top:12px;left:12px;
+  font-family:"Share Tech Mono",monospace;font-size:.58rem;letter-spacing:.12em;
+  background:var(--accent);color:var(--bg);padding:3px 10px;
+  transition:background var(--trans),color var(--trans);
+}
+.feat-ico{
+  font-family:"Share Tech Mono",monospace;font-size:3.5rem;
+  color:var(--accent);opacity:.15;text-shadow:var(--glow);
+  transition:color var(--trans),text-shadow var(--trans);
+}
+.feat-body{
+  padding:2rem;display:flex;flex-direction:column;justify-content:space-between;
+  background:var(--surface);transition:background var(--trans);
+}
+.post-meta{display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem;}
+.chip{
+  font-family:"Share Tech Mono",monospace;font-size:.58rem;
+  letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid var(--border2);padding:2px 9px;color:var(--text2);
+  transition:all var(--trans);
+}
+.chip.hi{border-color:var(--accent);color:var(--accent);}
+.pdate{font-family:"Share Tech Mono",monospace;font-size:.62rem;color:var(--text2);transition:color var(--trans);}
+.feat-body h2{
+  font-family:"Rajdhani",sans-serif;font-weight:700;
+  font-size:1.5rem;line-height:1.25;letter-spacing:-.01em;
+  color:var(--text);margin-bottom:.7rem;transition:color var(--trans);
+}
+.feat-body p{font-size:.83rem;color:var(--text2);line-height:1.7;transition:color var(--trans);}
+.rbtn{
+  display:inline-flex;align-items:center;gap:.5rem;margin-top:1.4rem;
+  font-family:"Share Tech Mono",monospace;font-size:.68rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent);
+  border-bottom:1px solid var(--border2);padding-bottom:2px;
+  transition:border-color .2s,gap .2s,color var(--trans);
+}
+.rbtn:hover{border-color:var(--accent);gap:.85rem;}
+@media(max-width:950px){.featured{grid-template-columns:1fr;} .feat-vis{min-height:130px;}}
 
-        /* 手機版適應 */
-        @media (max-width: 850px) {
-            .container { grid-template-columns: 1fr; padding: 20px 5%; }
-            header { padding: 1rem 5%; }
-            .hero { padding: 60px 5%; }
-        }
-    </style>
+/* SEARCH */
+.srch{position:relative;margin-bottom:1.8rem;opacity:0;animation:fadeUp .5s .3s forwards;}
+.srch-inp{
+  width:100%;background:var(--surface);border:1px solid var(--border2);
+  padding:.68rem 1rem .68rem 2.6rem;
+  font-family:"Share Tech Mono",monospace;font-size:.78rem;letter-spacing:.04em;
+  color:var(--text);outline:none;
+  transition:border-color .25s,box-shadow .25s,background var(--trans),color var(--trans);
+}
+.srch-inp::placeholder{color:var(--text2);}
+.srch-inp:focus{border-color:var(--accent);box-shadow:var(--glow);background:var(--bg3);}
+.srch-ico{
+  position:absolute;left:.8rem;top:50%;transform:translateY(-50%);
+  font-family:"Share Tech Mono",monospace;font-size:.72rem;
+  color:var(--accent);pointer-events:none;transition:color var(--trans);
+}
+
+/* POST GRID */
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+@media(max-width:600px){.pgrid{grid-template-columns:1fr;}}
+.card{
+  background:var(--surface);border:1px solid var(--border);
+  padding:1.5rem;position:relative;overflow:hidden;cursor:pointer;
+  opacity:0;animation:fadeUp .5s forwards;
+  transition:border-color .25s,box-shadow .25s,transform .25s,background var(--trans);
+}
+.card::before,.card::after{
+  content:'';position:absolute;width:10px;height:10px;
+  transition:border-color var(--trans);
+}
+.card::before{top:0;right:0;border-top:1px solid var(--border2);border-right:1px solid var(--border2);}
+.card::after{bottom:0;left:0;border-bottom:1px solid var(--border2);border-left:1px solid var(--border2);}
+.card:hover{border-color:var(--accent);box-shadow:var(--glow);transform:translateY(-3px);}
+.card:hover::before,.card:hover::after{border-color:var(--accent);}
+.scan{
+  position:absolute;top:-100%;left:0;right:0;height:40%;
+  background:linear-gradient(to bottom,transparent,rgba(0,245,255,.04),transparent);
+  pointer-events:none;transition:top .4s;
+}
+.card:hover .scan{top:120%;}
+.card h3{
+  font-family:"Rajdhani",sans-serif;font-weight:700;
+  font-size:1.02rem;line-height:1.35;
+  color:var(--text);margin:.65rem 0 .45rem;transition:color var(--trans);
+}
+.card p{font-size:.78rem;color:var(--text2);line-height:1.65;transition:color var(--trans);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.cfoot{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:.9rem;padding-top:.75rem;border-top:1px solid var(--border);
+  transition:border-color var(--trans);
+}
+.card .rbtn{margin-top:0;}
+.no-res{
+  grid-column:1/-1;text-align:center;padding:2.5rem 0;
+  font-family:"Share Tech Mono",monospace;font-size:.72rem;
+  color:var(--text2);letter-spacing:.1em;transition:color var(--trans);
+}
+.no-res span{color:var(--accent);}
+
+/* SIDEBAR */
+.sidebar{display:flex;flex-direction:column;gap:1.2rem;}
+.sc{
+  background:var(--surface);border:1px solid var(--border);
+  padding:1.3rem;transition:background var(--trans),border-color var(--trans);
+}
+.sc h3{
+  font-family:"Share Tech Mono",monospace;font-size:.63rem;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:1rem;transition:color var(--trans);
+}
+.av{
+  width:46px;height:46px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;
+  font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1.4rem;
+  color:var(--bg);margin-bottom:.8rem;transition:background var(--trans),color var(--trans);
+}
+.aname{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1.05rem;color:var(--text);transition:color var(--trans);}
+.arole{font-family:"Share Tech Mono",monospace;font-size:.6rem;letter-spacing:.1em;color:var(--accent2);margin-bottom:.45rem;transition:color var(--trans);}
+.abio{font-size:.78rem;color:var(--text2);line-height:1.6;transition:color var(--trans);}
+.socials{display:flex;gap:.45rem;margin-top:.85rem;flex-wrap:wrap;}
+.sl{
+  font-family:"Share Tech Mono",monospace;font-size:.58rem;letter-spacing:.07em;
+  border:1px solid var(--border2);padding:4px 10px;color:var(--text2);
+  transition:all .2s;
+}
+.sl:hover{border-color:var(--accent);color:var(--accent);box-shadow:var(--glow);}
+.cat-ul{list-style:none;}
+.cat-ul li{border-bottom:1px solid var(--border);transition:border-color var(--trans);}
+.cat-ul li:last-child{border-bottom:none;}
+.cat-ul a{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.52rem 0;font-family:"Share Tech Mono",monospace;font-size:.68rem;
+  color:var(--text2);transition:color .2s;
+}
+.cat-ul a:hover{color:var(--accent);}
+.cc{
+  font-size:.58rem;background:var(--bg2);
+  padding:2px 7px;border:1px solid var(--border);
+  transition:background var(--trans),border-color var(--trans);
+}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;}
+.ti{
+  font-family:"Share Tech Mono",monospace;font-size:.58rem;letter-spacing:.05em;
+  border:1px solid var(--border);padding:3px 9px;color:var(--text2);
+  cursor:pointer;transition:all .2s;
+}
+.ti:hover{border-color:var(--accent2);color:var(--accent2);box-shadow:var(--glow2);}
+.rec-ul{display:flex;flex-direction:column;gap:.75rem;}
+.ri{display:flex;gap:.6rem;align-items:flex-start;cursor:pointer;}
+.ri-n{
+  font-family:"Share Tech Mono",monospace;font-size:.6rem;
+  color:var(--accent);opacity:.65;padding-top:3px;flex-shrink:0;transition:color var(--trans);
+}
+.ri-t{font-size:.77rem;line-height:1.45;color:var(--text2);transition:color .2s;}
+.ri:hover .ri-t{color:var(--text);}
+.status-row{display:flex;align-items:center;gap:.55rem;margin-bottom:.5rem;}
+.dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--accent2);box-shadow:0 0 8px var(--accent2);
+  animation:pulse 2s ease-in-out infinite;transition:background var(--trans),box-shadow var(--trans);
+}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.stxt{font-family:"Share Tech Mono",monospace;font-size:.62rem;letter-spacing:.1em;color:var(--accent2);transition:color var(--trans);}
+.sinfo{font-family:"Share Tech Mono",monospace;font-size:.6rem;color:var(--text2);line-height:1.9;transition:color var(--trans);}
+
+/* FOOTER */
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid var(--border);
+  padding:1.5rem clamp(1.2rem,6%,5rem);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;
+  background:var(--surface);
+  transition:background var(--trans),border-color var(--trans);
+}
+.fl{font-family:"Share Tech Mono",monospace;font-size:.63rem;letter-spacing:.08em;color:var(--text2);transition:color var(--trans);}
+.fr{display:flex;gap:1.4rem;}
+.fr a{font-family:"Share Tech Mono",monospace;font-size:.63rem;letter-spacing:.08em;color:var(--text2);transition:color .2s;}
+.fr a:hover{color:var(--accent);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border2);}
+::-webkit-scrollbar-thumb:hover{background:var(--accent);}
+@media(max-width:950px){nav.desk{display:none;}.menu-btn{display:block;}}
+@media(max-width:580px){.hero-stats{gap:1.5rem;}}
+</style>
 </head>
 <body>
 
-    <header>
-        <a href="#" class="logo">Dougan Blog</a>
-        <button id="theme-btn">🌙 切換模式</button>
-    </header>
+<header>
+  <a href="#" class="logo">
+    <span class="logo-br">[</span>DOUGAN<span class="logo-br">]</span>
+    <span class="cursor"></span>
+  </a>
+  <nav class="desk">
+    <a href="#posts" data-n="01">POSTS</a>
+    <a href="#ctf" data-n="02">CTF</a>
+    <a href="#about" data-n="03">ABOUT</a>
+  </nav>
+  <div class="h-right">
+    <button class="theme-btn" id="theme-btn">
+      <span id="t-icon">☀</span><span id="t-lbl">LIGHT</span>
+    </button>
+    <button class="menu-btn" id="menu-btn">MENU</button>
+  </div>
+</header>
 
-    <section class="hero">
-        <h1>歡迎來到我的創作空間</h1>
-        <p>記錄生活、技術與靈感的集散地</p>
-    </section>
+<nav class="mob-nav" id="mob-nav">
+  <button class="mob-close" id="mob-close">✕</button>
+  <a href="#posts" onclick="closeMob()">POSTS</a>
+  <a href="#ctf" onclick="closeMob()">CTF</a>
+  <a href="#about" onclick="closeMob()">ABOUT</a>
+</nav>
 
-    <div class="container">
-        <!-- 主要文章區 -->
-        <main>
-            <article class="post-card">
-                <div class="post-date">2024年3月20日</div>
-                <h2>探索 GitHub Pages 的無限可能</h2>
-                <p>這是一個極簡的部落格模板，去除了繁瑣的留言板，專注於內容呈現。支援響應式佈局與深色模式切換...</p>
-                <a href="#" class="read-more">繼續閱讀 →</a>
-            </article>
+<section class="hero">
+  <div class="hero-frame tl"></div>
+  <div class="hero-frame br"></div>
+  <div class="hero-lbl" id="hero-lbl"></div>
+  <h1>HACK THE<br><span class="hl">KNOWLEDGE.</span></h1>
+  <p class="hero-sub"><span class="prompt">$</span>漏洞研究 · CTF 解題 · 技術筆記 · 生活隨筆</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="num">12</div><div class="lbl">POSTS</div></div>
+    <div class="stat"><div class="num">4</div><div class="lbl">CATEGORIES</div></div>
+    <div class="stat"><div class="num">2024</div><div class="lbl">SINCE</div></div>
+  </div>
+  <div class="hex-deco">
+    <svg width="220" height="220" viewBox="0 0 220 220">
+      <g class="hex-ring" style="animation:spinSlow 24s linear infinite;transform-origin:110px 110px;">
+        <polygon points="110,18 192,63 192,157 110,202 28,157 28,63"
+          fill="none" stroke="var(--accent)" stroke-width=".6" opacity=".22"/>
+        <polygon points="110,44 168,77 168,143 110,176 52,143 52,77"
+          fill="none" stroke="var(--accent2)" stroke-width=".6" opacity=".14"/>
+      </g>
+      <text x="110" y="118" text-anchor="middle"
+        font-family="Share Tech Mono,monospace" font-size="22"
+        fill="var(--accent)" opacity=".18">&lt;/&gt;</text>
+    </svg>
+  </div>
+</section>
 
-            <article class="post-card">
-                <div class="post-date">2024年3月15日</div>
-                <h2>為什麼我選擇簡約設計？</h2>
-                <p>在資訊爆炸的時代，乾淨的介面能讓讀者更專注於文字本身。這份 HTML 程式碼完全不依賴外部資料庫...</p>
-                <a href="#" class="read-more">繼續閱讀 →</a>
-            </article>
-        </main>
+<div id="posts"></div>
 
-        <!-- 側邊欄 -->
-        <aside>
-            <h3>分類標籤</h3>
-            <ul class="categories">
-                <li><a href="#"># 技術筆記</a></li>
-                <li><a href="#"># 生活隨筆</a></li>
-                <li><a href="#"># 漏洞專區</a></li>
-                <li><a href="./CTF.html"># CTF</a></li>
-            </ul>
-            <br>
-            <h3>關於作者</h3>
-            <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">
-                我是 Dougan，一名喜歡分享與創作的開發者。
-            </p>
-        </aside>
+<div class="wrap">
+  <main>
+    <div class="srch">
+      <span class="srch-ico">&gt;_</span>
+      <input type="text" class="srch-inp" id="srch"
+        placeholder="SEARCH :: title / category / tag"/>
     </div>
 
-    <script>
-        // 深色模式切換邏輯
-        const btn = document.getElementById('theme-btn');
-        const html = document.documentElement;
+    <div class="sec-head"><span class="sn">//</span><h2>FEATURED</h2></div>
+    <article class="featured">
+      <div class="feat-vis">
+        <svg class="ckt" viewBox="0 0 300 230" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">
+          <line x1="0" y1="58" x2="300" y2="58"/>
+          <line x1="0" y1="115" x2="300" y2="115"/>
+          <line x1="0" y1="172" x2="300" y2="172"/>
+          <line x1="60" y1="0" x2="60" y2="230"/>
+          <line x1="150" y1="0" x2="150" y2="230"/>
+          <line x1="240" y1="0" x2="240" y2="230"/>
+        </svg>
+        <span class="feat-badge">PINNED</span>
+        <div class="feat-ico">{_}</div>
+      </div>
+      <div class="feat-body">
+        <div>
+          <div class="post-meta">
+            <span class="chip hi">技術筆記</span>
+            <span class="pdate">2024.03.20</span>
+          </div>
+          <h2>探索 GitHub Pages 的無限可能</h2>
+          <p>極簡部落格模板，去除繁瑣留言板，專注內容呈現。支援響應式佈局與深色模式切換，純 HTML/CSS/JS 實作，零依賴。</p>
+        </div>
+        <a href="#" class="rbtn">READ MORE <span>→</span></a>
+      </div>
+    </article>
 
-        // 檢查瀏覽器上次儲存的設定
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            html.setAttribute('data-theme', 'dark');
-            btn.innerText = '☀️ 淺色模式';
-        }
+    <div class="sec-head" style="margin-top:2rem;"><span class="sn">//</span><h2>LATEST POSTS</h2></div>
+    <div class="pgrid" id="pgrid"></div>
+  </main>
 
-        btn.addEventListener('click', () => {
-            if (html.getAttribute('data-theme') === 'dark') {
-                html.removeAttribute('data-theme');
-                btn.innerText = '🌙 深色模式';
-                localStorage.setItem('theme', 'light');
-            } else {
-                html.setAttribute('data-theme', 'dark');
-                btn.innerText = '☀️ 淺色模式';
-                localStorage.setItem('theme', 'dark');
-            }
-        });
-    </script>
+  <aside class="sidebar" id="about">
+    <div class="sc">
+      <div class="status-row"><div class="dot"></div><span class="stxt">SYSTEM ONLINE</span></div>
+      <div class="sinfo">NODE: dougan-blog-v2<br>UPTIME: 99.9%<br>BUILD: production</div>
+    </div>
+    <div class="sc">
+      <h3>// OPERATOR</h3>
+      <div class="av">D</div>
+      <div class="aname">Dougan</div>
+      <div class="arole">SEC_RESEARCHER / DEV</div>
+      <p class="abio">喜歡分享與創作的開發者，專注 CTF 解題與 Web 漏洞研究。</p>
+      <div class="socials">
+        <a href="#" class="sl">GITHUB</a>
+        <a href="#" class="sl">TWITTER</a>
+        <a href="#" class="sl">EMAIL</a>
+      </div>
+    </div>
+    <div class="sc">
+      <h3>// MODULES</h3>
+      <ul class="cat-ul" id="ctf">
+        <li><a href="#"><span># 技術筆記</span><span class="cc">05</span></a></li>
+        <li><a href="#"><span># 生活隨筆</span><span class="cc">03</span></a></li>
+        <li><a href="#"><span># CTF</span><span class="cc">02</span></a></li>
+        <li><a href="#"><span># 漏洞專區</span><span class="cc">02</span></a></li>
+      </ul>
+    </div>
+    <div class="sc">
+      <h3>// TAGS</h3>
+      <div class="tags" id="tags"></div>
+    </div>
+    <div class="sc">
+      <h3>// HOT LIST</h3>
+      <div class="rec-ul" id="recs"></div>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="fl">© 2024 DOUGAN // ALL RIGHTS RESERVED</div>
+  <div class="fr">
+    <a href="#">GITHUB</a><a href="#">RSS</a><a href="#">CONTACT</a>
+  </div>
+</footer>
+
+<script>
+const posts=[
+  {id:1,date:"2024.03.15",cat:"技術筆記",tag:"CSS",title:"為什麼我選擇簡約設計？",desc:"在資訊爆炸的時代，乾淨的介面能讓讀者更專注於文字本身。這份 HTML 完全不依賴外部資料庫。",d:.45},
+  {id:2,date:"2024.03.10",cat:"CTF",tag:"PWN",title:"2024 AIS3 Pre-exam Writeup",desc:"本次涵蓋 pwn、web 與 misc 題目，本文記錄解題過程與心得，附完整 exploit 腳本。",d:.5},
+  {id:3,date:"2024.03.05",cat:"漏洞專區",tag:"Web",title:"SSRF 攻擊入門與防禦實踐",desc:"Server-Side Request Forgery 是近年常見的 Web 漏洞，從原理到實際利用一次搞懂。",d:.55},
+  {id:4,date:"2024.02.28",cat:"技術筆記",tag:"JS",title:"Vanilla JS 暗色模式切換",desc:"不依賴任何框架，20 行 JS 與 CSS 變數實作主題切換，並記住使用者偏好。",d:.6},
+  {id:5,date:"2024.02.20",cat:"生活隨筆",tag:"想法",title:"程式設計師的閱讀清單 2024",desc:"整理今年啟發最大的技術書單，包含系統設計、資安及軟技能相關內容。",d:.65},
+  {id:6,date:"2024.02.10",cat:"CTF",tag:"SQLi",title:"CTF Web：SQL Injection 進階技巧",desc:"盲注、時間型注入、二次注入，常見 CTF SQL 注入題型與解法整理。",d:.7},
+];
+const tagList=["JavaScript","HTML/CSS","CTF","PWN","Web","資安","SQLi","SSRF","靜態網站","開發筆記","Linux","Python"];
+
+function renderPosts(list){
+  const g=document.getElementById('pgrid');
+  if(!list.length){
+    const q=document.getElementById('srch').value;
+    g.innerHTML=`<div class="no-res">// NO RESULTS FOR <span>"${q}"</span></div>`;return;
+  }
+  g.innerHTML=list.map(p=>`
+    <article class="card" style="animation-delay:${p.d}s">
+      <div class="scan"></div>
+      <div class="post-meta">
+        <span class="chip hi">${p.cat}</span>
+        <span class="pdate">${p.date}</span>
+      </div>
+      <h3>${p.title}</h3>
+      <p>${p.desc}</p>
+      <div class="cfoot">
+        <span class="chip"># ${p.tag}</span>
+        <a href="#" class="rbtn">READ <span>→</span></a>
+      </div>
+    </article>`).join('');
+}
+renderPosts(posts);
+
+document.getElementById('tags').innerHTML=
+  tagList.map(t=>`<span class="ti" onclick="filterTag('${t}')">${t}</span>`).join('');
+
+document.getElementById('recs').innerHTML=
+  posts.slice(0,4).map((p,i)=>`
+    <div class="ri">
+      <span class="ri-n">0${i+1}</span>
+      <div class="ri-t">${p.title}</div>
+    </div>`).join('');
+
+document.getElementById('srch').addEventListener('input',e=>{
+  const q=e.target.value.trim().toLowerCase();
+  if(!q){renderPosts(posts);return;}
+  renderPosts(posts.filter(p=>
+    p.title.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q)||
+    p.cat.toLowerCase().includes(q)||p.tag.toLowerCase().includes(q)));
+});
+
+function filterTag(t){
+  const i=document.getElementById('srch');
+  i.value=t;i.dispatchEvent(new Event('input'));
+  document.getElementById('posts').scrollIntoView({behavior:'smooth'});
+}
+
+// THEME
+const html=document.documentElement;
+const tBtn=document.getElementById('theme-btn');
+const tIcon=document.getElementById('t-icon');
+const tLbl=document.getElementById('t-lbl');
+function applyTheme(t){
+  html.setAttribute('data-theme',t);
+  tIcon.textContent=t==='dark'?'☀':'☾';
+  tLbl.textContent=t==='dark'?'LIGHT':'DARK';
+}
+applyTheme(localStorage.getItem('dg-theme')||'dark');
+tBtn.addEventListener('click',()=>{
+  const n=html.getAttribute('data-theme')==='dark'?'light':'dark';
+  applyTheme(n);localStorage.setItem('dg-theme',n);
+});
+
+// MOB NAV
+document.getElementById('menu-btn').addEventListener('click',()=>
+  document.getElementById('mob-nav').classList.toggle('open'));
+document.getElementById('mob-close').addEventListener('click',closeMob);
+function closeMob(){document.getElementById('mob-nav').classList.remove('open');}
+
+// TYPING
+const lbl=document.getElementById('hero-lbl');
+const txt='>_ INITIALIZING BLOG SYSTEM v2.4.1';
+let ci=0;
+setTimeout(()=>{
+  const iv=setInterval(()=>{lbl.textContent=txt.slice(0,++ci);if(ci>=txt.length)clearInterval(iv);},26);
+},350);
+</script>
 </body>
 </html>
-
-
-
