@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dougan's Blog - CTF Note</title>
+    <title>Dougan's Blog</title>
     <style>
+        /* 顏色與基礎樣式完全沿用你的設定 */
         :root {
             --bg: #f4f7f6; --header-bg: #fff; --text: #333; --card: #fff; --border: #eee; --accent: #3498db; --code: #f8f9fa;
         }
@@ -13,25 +14,28 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.3s; }
-        body { font-family: "PingFang TC", sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        body { font-family: "PingFang TC", "Heiti TC", sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
 
         header { background: var(--header-bg); border-bottom: 1px solid var(--border); padding: 1rem 10%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .logo { font-size: 1.5rem; font-weight: bold; color: var(--accent); text-decoration: none; cursor: pointer; }
         
-        #theme-btn { cursor: pointer; padding: 6px 12px; border-radius: 20px; border: 1px solid var(--accent); background: transparent; color: var(--accent); font-weight: bold; }
+        #theme-btn { cursor: pointer; padding: 6px 12px; border-radius: 20px; border: 1px solid var(--accent); background: transparent; color: var(--accent); font-size: 0.85rem; font-weight: bold; }
 
-        .hero { background: #2c3e50; color: #fff; padding: 60px 10%; text-align: center; }
+        /* 列表區塊 */
+        .hero { background: #2c3e50; color: #fff; padding: 80px 10%; text-align: center; }
         .container { display: grid; grid-template-columns: 2.5fr 1fr; gap: 30px; padding: 40px 10%; max-width: 1200px; margin: 0 auto; }
 
-        .post-card, aside, .article-box { background: var(--card); padding: 30px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 25px; }
+        /* 卡片樣式 */
+        .post-card, aside, .article-content-box { background: var(--card); padding: 30px; border-radius: 12px; margin-bottom: 25px; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .post-date { font-size: 0.85rem; color: #999; margin-bottom: 10px; }
         .read-more, .nav-btn { color: var(--accent); text-decoration: none; font-weight: bold; cursor: pointer; display: inline-block; margin-top: 15px; }
 
-        /* 文章內頁專用樣式 */
-        #article-view { max-width: 800px; margin: 40px auto; display: none; padding: 0 20px; }
+        /* 文章內容專用 */
+        #article-view { display: none; max-width: 800px; margin: 40px auto; padding: 0 20px; }
         pre { background: var(--code); padding: 15px; border-radius: 8px; overflow-x: auto; border: 1px solid var(--border); margin: 15px 0; }
-        .nav-area { display: flex; justify-content: space-between; margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border); }
+        .page-nav { display: flex; justify-content: space-between; margin-top: 30px; border-top: 1px solid var(--border); padding-top: 20px; }
 
-        @media (max-width: 850px) { .container { grid-template-columns: 1fr; } }
+        @media (max-width: 850px) { .container { grid-template-columns: 1fr; padding: 20px 5%; } header { padding: 1rem 5%; } }
     </style>
 </head>
 <body>
@@ -41,7 +45,7 @@
         <button id="theme-btn">🌙 切換模式</button>
     </header>
 
-    <!-- 1. 列表視圖 -->
+    <!-- 列表頁面：包含 Hero 和所有內容 -->
     <div id="list-view">
         <section class="hero">
             <h1>歡迎來到我的創作空間</h1>
@@ -51,119 +55,82 @@
         <div class="container">
             <main>
                 <article class="post-card">
-                    <div style="color:#999; font-size:0.8rem;">2025年3月30日</div>
-                    <h2>Lord of SQLInjection: los.rubiya</h2>
-                    <p>這是一系列關於 SQL Injection 的解題紀錄，從基礎的 Gremlin 開始...</p>
-                    <a class="read-more" onclick="showArticle('sqli', 1)">繼續閱讀 →</a>
-                </article>
-
-                <article class="post-card">
-                    <div style="color:#999; font-size:0.8rem;">2024年3月15日</div>
-                    <h2>為什麼我選擇簡約設計？</h2>
-                    <p>在資訊爆炸的時代，乾淨的介面能讓讀者更專注於文字本身...</p>
-                    <a class="read-more" onclick="showArticle('design', 1)">繼續閱讀 →</a>
+                    <div class="post-date">2024年3月20日</div>
+                    <h2>探索 GitHub Pages 的無限可能</h2>
+                    <p>這是一個支援多頁顯示且不跳轉的部落格架構...</p>
+                    <a class="read-more" onclick="showArticle('github', 1)">繼續閱讀 →</a>
                 </article>
             </main>
 
             <aside>
                 <h3>分類標籤</h3>
-                <p style="margin-top:10px; opacity:0.8;"># 技術筆記<br># CTF<br># 漏洞專區</p>
+                <p style="margin-top:10px;"># 技術筆記<br># CTF</p>
             </aside>
         </div>
     </div>
 
-    <!-- 2. 文章視圖 (預設隱藏) -->
+    <!-- 文章詳細內容頁面 -->
     <div id="article-view">
-        <div class="nav-btn" onclick="showList()">← 返回列表</div>
-        <div class="article-box">
-            <div id="article-content">
-                <!-- 內容由 JS 注入 -->
-            </div>
-            <div class="nav-area" id="article-nav">
-                <!-- 分頁按鈕由 JS 注入 -->
-            </div>
+        <div class="nav-btn" onclick="showList()">← 返回文章列表</div>
+        <div class="article-content-box">
+            <div id="article-body"></div>
+            <div class="page-nav" id="article-nav"></div>
         </div>
     </div>
 
     <script>
-        // 文章數據庫 (支援分頁)
+        // 文章資料：支援分頁
         const postData = {
-            'sqli': {
-                1: {
-                    title: "los.rubiya - 第一頁：基礎概念",
-                    content: `<p>Gremlin 關卡是 LOB 的起點。源碼如下：</p><pre><code>$query = "select id from prob_gremlin where id='{$_GET[id]}' and pw='{$_GET[pw]}'";</code></pre><p>我們只需讓 Query 恆真即可繞過。</p>`
-                },
-                2: {
-                    title: "los.rubiya - 第二頁：進階繞過",
-                    content: `<p>當 <code>'</code> 被過濾時，我們可以使用 hex 或其他編碼方式...</p><pre><code>admin' # -> admin%27%23</code></pre><p>這是進階頁面的內容演示。</p>`
-                }
-            },
-            'design': {
-                1: {
-                    title: "為什麼我選擇簡約設計？",
-                    content: `<p>簡約不代表簡單。它是一種專注於核心價值的設計哲學。</p>`
-                }
+            'github': {
+                1: { title: "探索 GitHub Pages (P1)", content: "<p>這是第一頁的介紹內容...</p><pre><code>console.log('Hello World');</code></pre>" },
+                2: { title: "探索 GitHub Pages (P2)", content: "<p>這是第二頁的進階設定...</p>" }
             }
         };
 
         const listView = document.getElementById('list-view');
         const articleView = document.getElementById('article-view');
-        const articleContent = document.getElementById('article-content');
+        const articleBody = document.getElementById('article-body');
         const articleNav = document.getElementById('article-nav');
 
-        // 顯示文章功能
-        function showArticle(postId, page) {
-            const post = postData[postId] && postData[postId][page];
-            if (!post) return;
+        function showArticle(id, page) {
+            const data = postData[id][page];
+            if (!data) return;
 
-            // 隱藏列表，顯示文章
+            // 隱藏列表視圖，顯示文章視圖
             listView.style.display = 'none';
             articleView.style.display = 'block';
 
-            // 注入內容
-            articleContent.innerHTML = `
-                <h1 style="color:var(--accent); margin-bottom:10px;">${post.title}</h1>
-                <hr style="border:0; border-top:1px solid var(--border); margin-bottom:20px;">
-                <div style="font-size:1.1rem; line-height:1.8;">${post.content}</div>
-            `;
+            // 填充內容
+            articleBody.innerHTML = `<h1>${data.title}</h1><hr style="margin:20px 0; border:0; border-top:1px solid var(--border);">${data.content}`;
 
-            // 處理分頁按鈕
+            // 生成導覽按鈕
             let navHtml = '';
-            // 上一頁按鈕
-            if (page > 1) {
-                navHtml += `<span class="nav-btn" onclick="showArticle('${postId}', ${page - 1})">← 上一頁</span>`;
-            } else {
-                navHtml += `<span></span>`;
-            }
-            // 下一頁按鈕
-            if (postData[postId][page + 1]) {
-                navHtml += `<span class="nav-btn" onclick="showArticle('${postId}', ${page + 1})">下一頁 →</span>`;
-            } else {
-                navHtml += `<span></span>`;
-            }
+            navHtml += (page > 1) ? `<span class="nav-btn" onclick="showArticle('${id}', ${page-1})">← 上一頁</span>` : `<span></span>`;
+            navHtml += (postData[id][page+1]) ? `<span class="nav-btn" onclick="showArticle('${id}', ${page+1})">下一頁 →</span>` : `<span></span>`;
             articleNav.innerHTML = navHtml;
+
             window.scrollTo(0, 0);
         }
 
-        // 返回列表功能
         function showList() {
             articleView.style.display = 'none';
             listView.style.display = 'block';
             window.scrollTo(0, 0);
         }
 
-        // 深色模式切換
+        // 深色模式 (保留原邏輯)
         const btn = document.getElementById('theme-btn');
         const html = document.documentElement;
         btn.addEventListener('click', () => {
-            if (html.getAttribute('data-theme') === 'dark') {
-                html.removeAttribute('data-theme');
-                btn.innerText = '🌙 深色模式';
-            } else {
-                html.setAttribute('data-theme', 'dark');
-                btn.innerText = '☀️ 淺色模式';
-            }
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            btn.innerText = isDark ? '🌙 深色模式' : '☀️ 淺色模式';
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
         });
+        if (localStorage.getItem('theme') === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            btn.innerText = '☀️ 淺色模式';
+        }
     </script>
 </body>
 </html>
