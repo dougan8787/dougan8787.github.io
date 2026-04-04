@@ -7,627 +7,593 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet"/>
 <style>
-:root{--cyan:#00f5ff;--green:#39ff14;--trans:.35s cubic-bezier(.4,0,.2,1);}
-[data-theme="dark"]{
-  --bg:#050a0e;--bg2:#0a1520;--bg3:#0d1f2d;
-  --surface:rgba(10,25,40,.88);
-  --border:rgba(0,245,255,.1);--border2:rgba(0,245,255,.22);
-  --text:#c8dce8;--text2:#5a8a9f;
-  --accent:#00f5ff;--accent2:#39ff14;
-  --glow:0 0 18px rgba(0,245,255,.3);--glow2:0 0 18px rgba(57,255,20,.25);
-  --grid:rgba(0,245,255,.04);
-}
-[data-theme="light"]{
-  --bg:#eef4f8;--bg2:#deeaf2;--bg3:#f5f9fc;
-  --surface:rgba(240,250,255,.9);
-  --border:rgba(0,120,160,.13);--border2:rgba(0,120,160,.3);
-  --text:#0d2535;--text2:#4a7a92;
-  --accent:#006fa8;--accent2:#007a40;
-  --glow:0 0 16px rgba(0,110,168,.18);--glow2:0 0 16px rgba(0,122,64,.16);
-  --grid:rgba(0,120,160,.05);
-}
+:root{--trans:.32s cubic-bezier(.4,0,.2,1);}
+[data-theme="dark"]{--bg:#050a0e;--bg2:#0a1520;--bg3:#0d1f2d;--surface:rgba(10,25,40,.9);--border:rgba(0,245,255,.09);--border2:rgba(0,245,255,.22);--text:#c8dce8;--text2:#4d7f96;--accent:#00f5ff;--accent2:#39ff14;--accent3:#ff6b35;--glow:0 0 18px rgba(0,245,255,.32);--glow2:0 0 16px rgba(57,255,20,.25);--glow3:0 0 16px rgba(255,107,53,.28);--grid:rgba(0,245,255,.038);--danger:#ff3355;}
+[data-theme="light"]{--bg:#edf3f8;--bg2:#daeaf4;--bg3:#f4f9fc;--surface:rgba(238,248,255,.92);--border:rgba(0,110,160,.11);--border2:rgba(0,110,160,.28);--text:#0b2233;--text2:#3d7090;--accent:#006fa8;--accent2:#007840;--accent3:#d45a00;--glow:0 0 16px rgba(0,110,168,.18);--glow2:0 0 14px rgba(0,120,64,.16);--glow3:0 0 14px rgba(212,90,0,.18);--grid:rgba(0,110,160,.048);--danger:#cc1133;}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{
-  font-family:"Noto Sans TC",sans-serif;
-  background:var(--bg);color:var(--text);
-  line-height:1.7;overflow-x:hidden;
-  transition:background var(--trans),color var(--trans);
-  cursor:crosshair;
-}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:"Noto Sans TC",sans-serif;background:var(--bg);color:var(--text);line-height:1.72;overflow-x:hidden;transition:background var(--trans),color var(--trans);cursor:crosshair;min-height:100vh;}
 a{text-decoration:none;color:inherit;}
-body::before{
-  content:'';position:fixed;inset:0;
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-  background-size:40px 40px;pointer-events:none;z-index:0;
-  transition:background var(--trans);
-}
-[data-theme="dark"] body::after{
-  content:'';position:fixed;inset:0;
-  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.04) 2px,rgba(0,0,0,.04) 4px);
-  pointer-events:none;z-index:0;
-}
-
-/* HEADER */
-header{
-  position:sticky;top:0;z-index:100;
-  background:var(--surface);backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--border2);
-  padding:0 clamp(1.2rem,6%,5rem);height:60px;
-  display:flex;align-items:center;justify-content:space-between;
-  transition:background var(--trans),border-color var(--trans);
-}
-header::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,var(--accent) 30%,var(--accent2) 70%,transparent);
-  transition:background var(--trans);
-}
-.logo{
-  font-family:"Share Tech Mono",monospace;font-size:1.05rem;
-  color:var(--accent);letter-spacing:.1em;
-  display:flex;align-items:center;gap:.5rem;
-  text-shadow:var(--glow);transition:color var(--trans),text-shadow var(--trans);
-}
-.logo-br{opacity:.45;}
-.cursor{
-  display:inline-block;width:2px;height:.95rem;
-  background:var(--accent);margin-left:1px;
-  animation:blink .8s step-end infinite;transition:background var(--trans);
-}
+button{cursor:pointer;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:40px 40px;transition:background var(--trans);}
+[data-theme="dark"] body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.035) 2px,rgba(0,0,0,.035) 4px);}
+header{position:sticky;top:0;z-index:200;background:var(--surface);backdrop-filter:blur(18px);border-bottom:1px solid var(--border2);padding:0 clamp(1rem,6%,5rem);height:60px;display:flex;align-items:center;justify-content:space-between;transition:background var(--trans),border-color var(--trans);}
+header::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent) 30%,var(--accent2) 70%,transparent);transition:background var(--trans);}
+.logo{font-family:"Share Tech Mono",monospace;font-size:1.05rem;color:var(--accent);letter-spacing:.1em;display:flex;align-items:center;gap:.4rem;text-shadow:var(--glow);transition:color var(--trans),text-shadow var(--trans);}
+.logo-br{opacity:.4;}
+.cursor-blink{display:inline-block;width:2px;height:.9rem;background:var(--accent);margin-left:1px;animation:blink .8s step-end infinite;transition:background var(--trans);}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
-nav.desk{display:flex;gap:2rem;align-items:center;}
-nav.desk a{
-  font-family:"Share Tech Mono",monospace;font-size:.7rem;
-  letter-spacing:.12em;color:var(--text2);text-transform:uppercase;
-  position:relative;transition:color .2s;
-}
-nav.desk a::before{content:attr(data-n);position:absolute;left:-16px;font-size:.58rem;color:var(--accent);opacity:.55;}
-nav.desk a:hover{color:var(--accent);text-shadow:var(--glow);}
-.h-right{display:flex;align-items:center;gap:.7rem;}
-.theme-btn{
-  cursor:pointer;background:none;border:1px solid var(--border2);
-  padding:4px 13px;font-family:"Share Tech Mono",monospace;font-size:.62rem;
-  letter-spacing:.1em;color:var(--text2);
-  display:flex;align-items:center;gap:.5rem;
-  transition:all .2s;
-}
-.theme-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:var(--glow);}
-.menu-btn{
-  display:none;background:none;border:1px solid var(--border2);
-  padding:4px 10px;cursor:pointer;color:var(--text);
-  font-family:"Share Tech Mono",monospace;font-size:.72rem;
-  transition:border-color .2s,color var(--trans);
-}
-.menu-btn:hover{border-color:var(--accent);color:var(--accent);}
-
-/* MOB NAV */
-.mob-nav{
-  display:none;position:fixed;inset:0;
-  background:var(--bg);z-index:200;
-  padding:5rem 2rem 2rem;flex-direction:column;gap:1.5rem;
-  transition:background var(--trans);
-}
+nav.desk{display:flex;gap:1.8rem;align-items:center;}
+nav.desk a{font-family:"Share Tech Mono",monospace;font-size:.68rem;letter-spacing:.12em;color:var(--text2);text-transform:uppercase;position:relative;transition:color .2s;padding-bottom:2px;}
+nav.desk a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--accent);transition:width .25s;}
+nav.desk a:hover,nav.desk a.active{color:var(--accent);}
+nav.desk a:hover::after,nav.desk a.active::after{width:100%;}
+nav.desk a[data-n]::before{content:attr(data-n);position:absolute;left:-15px;font-size:.55rem;color:var(--accent);opacity:.5;}
+.h-right{display:flex;align-items:center;gap:.6rem;}
+.theme-btn,.menu-btn{background:none;border:1px solid var(--border2);padding:4px 12px;font-family:"Share Tech Mono",monospace;font-size:.62rem;letter-spacing:.09em;color:var(--text2);display:flex;align-items:center;gap:.4rem;transition:all .2s;}
+.theme-btn:hover,.menu-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:var(--glow);}
+.menu-btn{display:none;}
+.mob-nav{display:none;position:fixed;inset:0;background:var(--bg);z-index:300;padding:5rem 2rem 2rem;flex-direction:column;gap:1.4rem;transition:background var(--trans);}
 .mob-nav.open{display:flex;}
-.mob-nav a{
-  font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1.9rem;
-  color:var(--text);border-bottom:1px solid var(--border);padding-bottom:.8rem;
-  transition:color .2s,border-color var(--trans);
-}
+.mob-nav a{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1.8rem;color:var(--text);border-bottom:1px solid var(--border);padding-bottom:.75rem;transition:color .2s,border-color var(--trans);}
 .mob-nav a:hover{color:var(--accent);}
-.mob-close{
-  position:absolute;top:1rem;right:1.5rem;
-  background:none;border:none;font-size:1.6rem;
-  cursor:pointer;color:var(--text2);transition:color var(--trans);
-}
-
-/* HERO */
-.hero{
-  position:relative;z-index:1;
-  padding:clamp(3.5rem,9vw,7rem) clamp(1.2rem,6%,5rem) clamp(2.5rem,6vw,5rem);
-  overflow:hidden;
-}
-.hero-frame{position:absolute;border-style:solid;transition:border-color var(--trans);}
-.tl{top:20px;left:20px;width:48px;height:48px;border-width:1px 0 0 1px;border-color:var(--accent2);opacity:.4;}
-.br{bottom:20px;right:20px;width:48px;height:48px;border-width:0 1px 1px 0;border-color:var(--accent2);opacity:.4;}
-.hero-lbl{
-  font-family:"Share Tech Mono",monospace;font-size:.68rem;
-  letter-spacing:.2em;text-transform:uppercase;
-  color:var(--accent2);margin-bottom:1.4rem;min-height:1.2rem;
-  text-shadow:var(--glow2);transition:color var(--trans),text-shadow var(--trans);
-  opacity:0;animation:fadeUp .4s .1s forwards;
-}
-.hero h1{
-  font-family:"Rajdhani",sans-serif;font-weight:700;
-  font-size:clamp(2.8rem,6vw,5rem);line-height:1.05;letter-spacing:-.02em;
-  color:var(--text);opacity:0;animation:fadeUp .5s .2s forwards;transition:color var(--trans);
-}
-.hero h1 .hl{
-  color:var(--accent);text-shadow:var(--glow);
-  transition:color var(--trans),text-shadow var(--trans);
-}
-.hero-sub{
-  margin-top:1.2rem;font-family:"Share Tech Mono",monospace;font-size:.8rem;
-  color:var(--text2);max-width:500px;
-  opacity:0;animation:fadeUp .5s .35s forwards;transition:color var(--trans);
-}
-.prompt{color:var(--accent2);margin-right:.4rem;transition:color var(--trans);}
-.hero-stats{
-  display:flex;gap:3rem;margin-top:2.5rem;padding-top:2rem;
-  border-top:1px solid var(--border);
-  opacity:0;animation:fadeUp .5s .5s forwards;transition:border-color var(--trans);
-}
-.stat .num{
-  font-family:"Rajdhani",sans-serif;font-weight:700;font-size:2rem;
-  color:var(--accent);text-shadow:var(--glow);line-height:1;
-  transition:color var(--trans),text-shadow var(--trans);
-}
-.stat .lbl{
-  font-family:"Share Tech Mono",monospace;font-size:.6rem;
-  letter-spacing:.14em;text-transform:uppercase;
-  color:var(--text2);margin-top:.2rem;transition:color var(--trans);
-}
-.hex-deco{
-  position:absolute;right:8%;top:50%;transform:translateY(-50%);
-  pointer-events:none;opacity:0;animation:fadeIn .8s .7s forwards;
-}
-@keyframes spinSlow{to{transform:rotate(360deg);}}
-.hex-ring{animation:spinSlow 24s linear infinite;transform-origin:110px 110px;}
-@media(max-width:900px){.hex-deco{display:none;}}
-
-/* WRAP */
-.wrap{
-  position:relative;z-index:1;
-  display:grid;grid-template-columns:minmax(0,1fr) 260px;
-  gap:2rem;padding:2rem clamp(1.2rem,6%,5rem) 4rem;
-  max-width:1280px;margin:0 auto;
-}
-@media(max-width:950px){.wrap{grid-template-columns:1fr;}}
-
-/* SEC HEAD */
+.mob-close{position:absolute;top:1rem;right:1.5rem;background:none;border:none;font-size:1.6rem;color:var(--text2);transition:color var(--trans);}
+#app{position:relative;z-index:1;min-height:calc(100vh - 60px);}
+.page{display:none;animation:fadeUp .4s ease both;}
+.page.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.container{max-width:1260px;margin:0 auto;padding:2.5rem clamp(1rem,6%,5rem) 4rem;}
+.two-col{display:grid;grid-template-columns:minmax(0,1fr) 268px;gap:2rem;}
 .sec-head{display:flex;align-items:center;gap:.7rem;margin-bottom:1.5rem;}
 .sec-head .sn{font-family:"Share Tech Mono",monospace;font-size:.62rem;color:var(--accent);transition:color var(--trans);}
-.sec-head h2{
-  font-family:"Share Tech Mono",monospace;font-size:.7rem;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--text2);transition:color var(--trans);
-}
+.sec-head h2{font-family:"Share Tech Mono",monospace;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text2);transition:color var(--trans);}
 .sec-head::after{content:'';flex:1;height:1px;background:var(--border);transition:background var(--trans);}
-
-/* FEATURED */
-.featured{
-  display:grid;grid-template-columns:1fr 1.2fr;
-  border:1px solid var(--border2);margin-bottom:2rem;overflow:hidden;
-  opacity:0;animation:fadeUp .6s .4s forwards;
-  transition:border-color .25s,box-shadow .25s;
-}
-.featured:hover{border-color:var(--accent);box-shadow:var(--glow);}
-.feat-vis{
-  background:var(--bg3);position:relative;min-height:230px;
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;transition:background var(--trans);
-}
-.feat-vis::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(0,245,255,.06),transparent 55%),
-             linear-gradient(225deg,rgba(57,255,20,.04),transparent 55%);
-}
-.ckt{position:absolute;inset:0;}
-.ckt line{stroke:var(--border2);stroke-width:.5;transition:stroke var(--trans);}
-.feat-badge{
-  position:absolute;top:12px;left:12px;
-  font-family:"Share Tech Mono",monospace;font-size:.58rem;letter-spacing:.12em;
-  background:var(--accent);color:var(--bg);padding:3px 10px;
-  transition:background var(--trans),color var(--trans);
-}
-.feat-ico{
-  font-family:"Share Tech Mono",monospace;font-size:3.5rem;
-  color:var(--accent);opacity:.15;text-shadow:var(--glow);
-  transition:color var(--trans),text-shadow var(--trans);
-}
-.feat-body{
-  padding:2rem;display:flex;flex-direction:column;justify-content:space-between;
-  background:var(--surface);transition:background var(--trans);
-}
-.post-meta{display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem;}
-.chip{
-  font-family:"Share Tech Mono",monospace;font-size:.58rem;
-  letter-spacing:.08em;text-transform:uppercase;
-  border:1px solid var(--border2);padding:2px 9px;color:var(--text2);
-  transition:all var(--trans);
-}
+.chip{font-family:"Share Tech Mono",monospace;font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;border:1px solid var(--border2);padding:2px 9px;color:var(--text2);transition:all var(--trans);}
 .chip.hi{border-color:var(--accent);color:var(--accent);}
+.chip.gr{border-color:var(--accent2);color:var(--accent2);}
+.chip.or{border-color:var(--accent3);color:var(--accent3);}
 .pdate{font-family:"Share Tech Mono",monospace;font-size:.62rem;color:var(--text2);transition:color var(--trans);}
-.feat-body h2{
-  font-family:"Rajdhani",sans-serif;font-weight:700;
-  font-size:1.5rem;line-height:1.25;letter-spacing:-.01em;
-  color:var(--text);margin-bottom:.7rem;transition:color var(--trans);
-}
-.feat-body p{font-size:.83rem;color:var(--text2);line-height:1.7;transition:color var(--trans);}
-.rbtn{
-  display:inline-flex;align-items:center;gap:.5rem;margin-top:1.4rem;
-  font-family:"Share Tech Mono",monospace;font-size:.68rem;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--accent);
-  border-bottom:1px solid var(--border2);padding-bottom:2px;
-  transition:border-color .2s,gap .2s,color var(--trans);
-}
-.rbtn:hover{border-color:var(--accent);gap:.85rem;}
-@media(max-width:950px){.featured{grid-template-columns:1fr;} .feat-vis{min-height:130px;}}
-
-/* SEARCH */
-.srch{position:relative;margin-bottom:1.8rem;opacity:0;animation:fadeUp .5s .3s forwards;}
-.srch-inp{
-  width:100%;background:var(--surface);border:1px solid var(--border2);
-  padding:.68rem 1rem .68rem 2.6rem;
-  font-family:"Share Tech Mono",monospace;font-size:.78rem;letter-spacing:.04em;
-  color:var(--text);outline:none;
-  transition:border-color .25s,box-shadow .25s,background var(--trans),color var(--trans);
-}
-.srch-inp::placeholder{color:var(--text2);}
-.srch-inp:focus{border-color:var(--accent);box-shadow:var(--glow);background:var(--bg3);}
-.srch-ico{
-  position:absolute;left:.8rem;top:50%;transform:translateY(-50%);
-  font-family:"Share Tech Mono",monospace;font-size:.72rem;
-  color:var(--accent);pointer-events:none;transition:color var(--trans);
-}
-
-/* POST GRID */
-.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
-@media(max-width:600px){.pgrid{grid-template-columns:1fr;}}
-.card{
-  background:var(--surface);border:1px solid var(--border);
-  padding:1.5rem;position:relative;overflow:hidden;cursor:pointer;
-  opacity:0;animation:fadeUp .5s forwards;
-  transition:border-color .25s,box-shadow .25s,transform .25s,background var(--trans);
-}
-.card::before,.card::after{
-  content:'';position:absolute;width:10px;height:10px;
-  transition:border-color var(--trans);
-}
+.post-meta{display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem;flex-wrap:wrap;}
+.rbtn{display:inline-flex;align-items:center;gap:.45rem;font-family:"Share Tech Mono",monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--border2);padding-bottom:2px;transition:border-color .2s,gap .2s,color var(--trans);}
+.rbtn:hover{border-color:var(--accent);gap:.8rem;}
+.card{background:var(--surface);border:1px solid var(--border);padding:1.5rem;position:relative;overflow:hidden;cursor:pointer;transition:border-color .25s,box-shadow .25s,transform .25s,background var(--trans);}
+.card::before,.card::after{content:'';position:absolute;width:10px;height:10px;transition:border-color var(--trans);}
 .card::before{top:0;right:0;border-top:1px solid var(--border2);border-right:1px solid var(--border2);}
 .card::after{bottom:0;left:0;border-bottom:1px solid var(--border2);border-left:1px solid var(--border2);}
 .card:hover{border-color:var(--accent);box-shadow:var(--glow);transform:translateY(-3px);}
 .card:hover::before,.card:hover::after{border-color:var(--accent);}
-.scan{
-  position:absolute;top:-100%;left:0;right:0;height:40%;
-  background:linear-gradient(to bottom,transparent,rgba(0,245,255,.04),transparent);
-  pointer-events:none;transition:top .4s;
-}
-.card:hover .scan{top:120%;}
-.card h3{
-  font-family:"Rajdhani",sans-serif;font-weight:700;
-  font-size:1.02rem;line-height:1.35;
-  color:var(--text);margin:.65rem 0 .45rem;transition:color var(--trans);
-}
-.card p{font-size:.78rem;color:var(--text2);line-height:1.65;transition:color var(--trans);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
-.cfoot{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-top:.9rem;padding-top:.75rem;border-top:1px solid var(--border);
-  transition:border-color var(--trans);
-}
-.card .rbtn{margin-top:0;}
-.no-res{
-  grid-column:1/-1;text-align:center;padding:2.5rem 0;
-  font-family:"Share Tech Mono",monospace;font-size:.72rem;
-  color:var(--text2);letter-spacing:.1em;transition:color var(--trans);
-}
-.no-res span{color:var(--accent);}
-
-/* SIDEBAR */
-.sidebar{display:flex;flex-direction:column;gap:1.2rem;}
-.sc{
-  background:var(--surface);border:1px solid var(--border);
-  padding:1.3rem;transition:background var(--trans),border-color var(--trans);
-}
-.sc h3{
-  font-family:"Share Tech Mono",monospace;font-size:.63rem;
-  letter-spacing:.18em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:1rem;transition:color var(--trans);
-}
-.av{
-  width:46px;height:46px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  display:flex;align-items:center;justify-content:center;
-  font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1.4rem;
-  color:var(--bg);margin-bottom:.8rem;transition:background var(--trans),color var(--trans);
-}
-.aname{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1.05rem;color:var(--text);transition:color var(--trans);}
-.arole{font-family:"Share Tech Mono",monospace;font-size:.6rem;letter-spacing:.1em;color:var(--accent2);margin-bottom:.45rem;transition:color var(--trans);}
-.abio{font-size:.78rem;color:var(--text2);line-height:1.6;transition:color var(--trans);}
-.socials{display:flex;gap:.45rem;margin-top:.85rem;flex-wrap:wrap;}
-.sl{
-  font-family:"Share Tech Mono",monospace;font-size:.58rem;letter-spacing:.07em;
-  border:1px solid var(--border2);padding:4px 10px;color:var(--text2);
-  transition:all .2s;
-}
-.sl:hover{border-color:var(--accent);color:var(--accent);box-shadow:var(--glow);}
+.scan-line{position:absolute;top:-100%;left:0;right:0;height:40%;background:linear-gradient(to bottom,transparent,rgba(0,245,255,.04),transparent);pointer-events:none;transition:top .4s;}
+.card:hover .scan-line{top:120%;}
+.card h3{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1.02rem;line-height:1.35;color:var(--text);margin:.6rem 0 .45rem;transition:color var(--trans);}
+.card p{font-size:.79rem;color:var(--text2);line-height:1.65;transition:color var(--trans);}
+.clamp3{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.card-foot{display:flex;justify-content:space-between;align-items:center;margin-top:.9rem;padding-top:.75rem;border-top:1px solid var(--border);transition:border-color var(--trans);}
+.sc{background:var(--surface);border:1px solid var(--border);padding:1.3rem;transition:background var(--trans),border-color var(--trans);margin-bottom:1.2rem;}
+.sc h3{font-family:"Share Tech Mono",monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;transition:color var(--trans);}
 .cat-ul{list-style:none;}
 .cat-ul li{border-bottom:1px solid var(--border);transition:border-color var(--trans);}
 .cat-ul li:last-child{border-bottom:none;}
-.cat-ul a{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:.52rem 0;font-family:"Share Tech Mono",monospace;font-size:.68rem;
-  color:var(--text2);transition:color .2s;
-}
+.cat-ul a{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;font-family:"Share Tech Mono",monospace;font-size:.67rem;color:var(--text2);transition:color .2s;}
 .cat-ul a:hover{color:var(--accent);}
-.cc{
-  font-size:.58rem;background:var(--bg2);
-  padding:2px 7px;border:1px solid var(--border);
-  transition:background var(--trans),border-color var(--trans);
-}
-.tags{display:flex;flex-wrap:wrap;gap:.4rem;}
-.ti{
-  font-family:"Share Tech Mono",monospace;font-size:.58rem;letter-spacing:.05em;
-  border:1px solid var(--border);padding:3px 9px;color:var(--text2);
-  cursor:pointer;transition:all .2s;
-}
+.cc{font-size:.56rem;background:var(--bg2);padding:2px 7px;border:1px solid var(--border);transition:background var(--trans),border-color var(--trans);}
+.tags-cloud{display:flex;flex-wrap:wrap;gap:.38rem;}
+.ti{font-family:"Share Tech Mono",monospace;font-size:.57rem;letter-spacing:.05em;border:1px solid var(--border);padding:3px 9px;color:var(--text2);cursor:pointer;transition:all .2s;}
 .ti:hover{border-color:var(--accent2);color:var(--accent2);box-shadow:var(--glow2);}
 .rec-ul{display:flex;flex-direction:column;gap:.75rem;}
 .ri{display:flex;gap:.6rem;align-items:flex-start;cursor:pointer;}
-.ri-n{
-  font-family:"Share Tech Mono",monospace;font-size:.6rem;
-  color:var(--accent);opacity:.65;padding-top:3px;flex-shrink:0;transition:color var(--trans);
-}
+.ri-n{font-family:"Share Tech Mono",monospace;font-size:.58rem;color:var(--accent);opacity:.6;padding-top:3px;flex-shrink:0;transition:color var(--trans);}
 .ri-t{font-size:.77rem;line-height:1.45;color:var(--text2);transition:color .2s;}
 .ri:hover .ri-t{color:var(--text);}
 .status-row{display:flex;align-items:center;gap:.55rem;margin-bottom:.5rem;}
-.dot{
-  width:7px;height:7px;border-radius:50%;
-  background:var(--accent2);box-shadow:0 0 8px var(--accent2);
-  animation:pulse 2s ease-in-out infinite;transition:background var(--trans),box-shadow var(--trans);
-}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--accent2);box-shadow:0 0 8px var(--accent2);animation:pulse 2s ease-in-out infinite;transition:background var(--trans),box-shadow var(--trans);}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
 .stxt{font-family:"Share Tech Mono",monospace;font-size:.62rem;letter-spacing:.1em;color:var(--accent2);transition:color var(--trans);}
-.sinfo{font-family:"Share Tech Mono",monospace;font-size:.6rem;color:var(--text2);line-height:1.9;transition:color var(--trans);}
-
-/* FOOTER */
-footer{
-  position:relative;z-index:1;
-  border-top:1px solid var(--border);
-  padding:1.5rem clamp(1.2rem,6%,5rem);
-  display:flex;justify-content:space-between;align-items:center;
-  flex-wrap:wrap;gap:1rem;
-  background:var(--surface);
-  transition:background var(--trans),border-color var(--trans);
-}
-.fl{font-family:"Share Tech Mono",monospace;font-size:.63rem;letter-spacing:.08em;color:var(--text2);transition:color var(--trans);}
+.sinfo{font-family:"Share Tech Mono",monospace;font-size:.59rem;color:var(--text2);line-height:1.9;transition:color var(--trans);}
+.av{width:46px;height:46px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1.4rem;color:var(--bg);margin-bottom:.8rem;transition:background var(--trans),color var(--trans);}
+.aname{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1.05rem;color:var(--text);transition:color var(--trans);}
+.arole{font-family:"Share Tech Mono",monospace;font-size:.59rem;letter-spacing:.1em;color:var(--accent2);margin-bottom:.4rem;transition:color var(--trans);}
+.abio{font-size:.78rem;color:var(--text2);line-height:1.6;transition:color var(--trans);}
+.socials{display:flex;gap:.45rem;margin-top:.85rem;flex-wrap:wrap;}
+.sl{font-family:"Share Tech Mono",monospace;font-size:.57rem;letter-spacing:.07em;border:1px solid var(--border2);padding:4px 10px;color:var(--text2);transition:all .2s;}
+.sl:hover{border-color:var(--accent);color:var(--accent);box-shadow:var(--glow);}
+.hero{position:relative;z-index:1;padding:clamp(3rem,8vw,6.5rem) clamp(1rem,6%,5rem) clamp(2rem,5vw,4.5rem);overflow:hidden;}
+.hero-frame{position:absolute;border-style:solid;transition:border-color var(--trans);}
+.tl{top:20px;left:20px;width:44px;height:44px;border-width:1px 0 0 1px;border-color:var(--accent2);opacity:.38;}
+.br{bottom:20px;right:20px;width:44px;height:44px;border-width:0 1px 1px 0;border-color:var(--accent2);opacity:.38;}
+.hero-lbl{font-family:"Share Tech Mono",monospace;font-size:.67rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent2);margin-bottom:1.3rem;min-height:1.1rem;text-shadow:var(--glow2);transition:color var(--trans),text-shadow var(--trans);}
+.hero h1{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:clamp(2.6rem,5.5vw,4.8rem);line-height:1.06;letter-spacing:-.02em;color:var(--text);transition:color var(--trans);}
+.hero h1 .hl{color:var(--accent);text-shadow:var(--glow);transition:color var(--trans),text-shadow var(--trans);}
+.hero-sub{margin-top:1.1rem;font-family:"Share Tech Mono",monospace;font-size:.78rem;color:var(--text2);max-width:480px;transition:color var(--trans);}
+.hero-sub .prompt{color:var(--accent2);margin-right:.35rem;transition:color var(--trans);}
+.hero-stats{display:flex;gap:2.8rem;margin-top:2.3rem;padding-top:1.8rem;border-top:1px solid var(--border);transition:border-color var(--trans);}
+.stat .num{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1.9rem;color:var(--accent);text-shadow:var(--glow);line-height:1;transition:color var(--trans),text-shadow var(--trans);}
+.stat .lbl{font-family:"Share Tech Mono",monospace;font-size:.59rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text2);margin-top:.18rem;transition:color var(--trans);}
+.hex-deco{position:absolute;right:8%;top:50%;transform:translateY(-50%);pointer-events:none;}
+@keyframes spinSlow{to{transform:rotate(360deg);}}
+.hex-ring{animation:spinSlow 26s linear infinite;transform-origin:110px 110px;}
+.featured{display:grid;grid-template-columns:1fr 1.2fr;border:1px solid var(--border2);overflow:hidden;transition:border-color .25s,box-shadow .25s;}
+.featured:hover{border-color:var(--accent);box-shadow:var(--glow);}
+.feat-vis{background:var(--bg3);position:relative;min-height:220px;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:background var(--trans);}
+.feat-vis::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,245,255,.07),transparent 55%),linear-gradient(225deg,rgba(57,255,20,.04),transparent 55%);}
+.ckt{position:absolute;inset:0;}
+.ckt line{stroke:var(--border2);stroke-width:.5;transition:stroke var(--trans);}
+.feat-badge{position:absolute;top:12px;left:12px;font-family:"Share Tech Mono",monospace;font-size:.57rem;letter-spacing:.12em;background:var(--accent);color:var(--bg);padding:3px 10px;transition:background var(--trans),color var(--trans);}
+.feat-ico{font-family:"Share Tech Mono",monospace;font-size:3.2rem;color:var(--accent);opacity:.14;text-shadow:var(--glow);transition:color var(--trans),text-shadow var(--trans);}
+.feat-body{padding:1.8rem;display:flex;flex-direction:column;justify-content:space-between;background:var(--surface);transition:background var(--trans);}
+.feat-body h2{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1.45rem;line-height:1.25;letter-spacing:-.01em;color:var(--text);margin-bottom:.65rem;transition:color var(--trans);}
+.feat-body p{font-size:.82rem;color:var(--text2);line-height:1.7;transition:color var(--trans);}
+.srch-wrap{position:relative;margin-bottom:1.7rem;}
+.srch-inp{width:100%;background:var(--surface);border:1px solid var(--border2);padding:.66rem 1rem .66rem 2.5rem;font-family:"Share Tech Mono",monospace;font-size:.76rem;letter-spacing:.04em;color:var(--text);outline:none;transition:border-color .25s,box-shadow .25s,background var(--trans),color var(--trans);}
+.srch-inp::placeholder{color:var(--text2);}
+.srch-inp:focus{border-color:var(--accent);box-shadow:var(--glow);background:var(--bg3);}
+.srch-ico{position:absolute;left:.75rem;top:50%;transform:translateY(-50%);font-family:"Share Tech Mono",monospace;font-size:.7rem;color:var(--accent);pointer-events:none;transition:color var(--trans);}
+.post-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.15rem;}
+.no-res{grid-column:1/-1;text-align:center;padding:2.5rem 0;font-family:"Share Tech Mono",monospace;font-size:.72rem;color:var(--text2);letter-spacing:.1em;transition:color var(--trans);}
+.no-res span{color:var(--accent);}
+footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.5rem clamp(1rem,6%,5rem);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;background:var(--surface);transition:background var(--trans),border-color var(--trans);}
+.fl,.fr a{font-family:"Share Tech Mono",monospace;font-size:.62rem;letter-spacing:.08em;color:var(--text2);transition:color var(--trans);}
 .fr{display:flex;gap:1.4rem;}
-.fr a{font-family:"Share Tech Mono",monospace;font-size:.63rem;letter-spacing:.08em;color:var(--text2);transition:color .2s;}
 .fr a:hover{color:var(--accent);}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+/* article */
+.article-wrap{max-width:1260px;margin:0 auto;padding:2.5rem clamp(1rem,6%,5rem) 4rem;}
+.article-grid{display:grid;grid-template-columns:minmax(0,1fr) 268px;gap:2rem;}
+.breadcrumb{font-family:"Share Tech Mono",monospace;font-size:.62rem;color:var(--text2);margin-bottom:1rem;letter-spacing:.08em;transition:color var(--trans);}
+.breadcrumb a{color:var(--accent);transition:color var(--trans);}
+.article-h1{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.15;letter-spacing:-.02em;color:var(--text);margin:.6rem 0;transition:color var(--trans);}
+.article-body{background:var(--surface);border:1px solid var(--border);padding:2rem;transition:background var(--trans),border-color var(--trans);}
+.article-body h2{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1.3rem;color:var(--accent);margin:1.5rem 0 .6rem;padding-left:.8rem;border-left:2px solid var(--accent);transition:color var(--trans),border-color var(--trans);}
+.article-body h3{font-family:"Rajdhani",sans-serif;font-weight:600;font-size:1.05rem;color:var(--text);margin:1.2rem 0 .5rem;transition:color var(--trans);}
+.article-body p{font-size:.88rem;color:var(--text2);line-height:1.85;margin-bottom:.9rem;transition:color var(--trans);}
+.article-body code{font-family:"Share Tech Mono",monospace;font-size:.78rem;background:var(--bg2);color:var(--accent);padding:2px 7px;border:1px solid var(--border);transition:background var(--trans),color var(--trans),border-color var(--trans);}
+.article-body pre{background:var(--bg2);border:1px solid var(--border);padding:1.2rem;margin:1rem 0;overflow-x:auto;transition:background var(--trans),border-color var(--trans);}
+.article-body pre code{background:none;border:none;padding:0;font-size:.76rem;color:var(--accent2);line-height:1.7;}
+.article-body ul,.article-body ol{margin:.6rem 0 .9rem 1.5rem;}
+.article-body li{font-size:.87rem;color:var(--text2);line-height:1.7;margin-bottom:.3rem;transition:color var(--trans);}
+.article-tags{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid var(--border);transition:border-color var(--trans);}
+.anav{display:flex;justify-content:space-between;gap:1rem;margin-top:1.5rem;}
+.anav-btn{flex:1;background:var(--surface);border:1px solid var(--border);padding:1rem;transition:border-color .2s,box-shadow .2s,background var(--trans);cursor:pointer;}
+.anav-btn:hover{border-color:var(--accent);box-shadow:var(--glow);}
+.anav-lbl{font-family:"Share Tech Mono",monospace;font-size:.58rem;letter-spacing:.1em;color:var(--text2);text-transform:uppercase;margin-bottom:.3rem;transition:color var(--trans);}
+.anav-title{font-family:"Rajdhani",sans-serif;font-weight:600;font-size:.9rem;color:var(--text);transition:color var(--trans);}
+/* about */
+.about-hero{padding:clamp(2.5rem,6vw,5rem) clamp(1rem,6%,5rem);display:grid;grid-template-columns:auto 1fr;gap:2.5rem;align-items:start;border-bottom:1px solid var(--border);transition:border-color var(--trans);}
+.about-avatar{width:120px;height:120px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:"Rajdhani",sans-serif;font-weight:700;font-size:3rem;color:var(--bg);flex-shrink:0;transition:background var(--trans),color var(--trans);}
+.about-info h1{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:2.2rem;color:var(--text);margin-bottom:.3rem;transition:color var(--trans);}
+.about-role{font-family:"Share Tech Mono",monospace;font-size:.72rem;letter-spacing:.14em;color:var(--accent2);margin-bottom:.9rem;transition:color var(--trans);}
+.about-info p{font-size:.88rem;color:var(--text2);line-height:1.8;max-width:560px;transition:color var(--trans);}
+.about-links{display:flex;gap:.55rem;margin-top:1.1rem;flex-wrap:wrap;}
+.about-section{max-width:1260px;margin:0 auto;padding:2.5rem clamp(1rem,6%,5rem) 4rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
+.skill-card{background:var(--surface);border:1px solid var(--border);padding:1.5rem;transition:background var(--trans),border-color var(--trans);}
+.skill-card h3{font-family:"Share Tech Mono",monospace;font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;transition:color var(--trans);}
+.skill-bar-wrap{margin-bottom:.75rem;}
+.skill-name{display:flex;justify-content:space-between;font-family:"Share Tech Mono",monospace;font-size:.65rem;color:var(--text2);margin-bottom:.3rem;transition:color var(--trans);}
+.skill-bar{height:3px;background:var(--border);position:relative;transition:background var(--trans);}
+.skill-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .8s ease;}
+.timeline{display:flex;flex-direction:column;gap:0;}
+.tl-item{padding:1rem 0 1rem 1.5rem;border-left:1px solid var(--border);position:relative;transition:border-color var(--trans);}
+.tl-item::before{content:'';position:absolute;left:-3px;top:1.3rem;width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:var(--glow);transition:background var(--trans),box-shadow var(--trans);}
+.tl-date{font-family:"Share Tech Mono",monospace;font-size:.6rem;letter-spacing:.1em;color:var(--accent);margin-bottom:.25rem;transition:color var(--trans);}
+.tl-title{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1rem;color:var(--text);transition:color var(--trans);}
+.tl-sub{font-size:.78rem;color:var(--text2);margin-top:.2rem;transition:color var(--trans);}
+/* ctf */
+.ctf-hero{padding:clamp(2.5rem,6vw,5rem) clamp(1rem,6%,5rem) 1rem;border-bottom:1px solid var(--border);transition:border-color var(--trans);}
+.ctf-hero h1{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:clamp(2rem,5vw,3.5rem);color:var(--text);transition:color var(--trans);}
+.ctf-hero h1 span{color:var(--accent2);text-shadow:var(--glow2);transition:color var(--trans),text-shadow var(--trans);}
+.ctf-hero p{font-family:"Share Tech Mono",monospace;font-size:.73rem;color:var(--text2);margin-top:.7rem;transition:color var(--trans);}
+.ctf-stats{display:flex;gap:2rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);transition:border-color var(--trans);}
+.ctf-stat .n{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1.6rem;color:var(--accent2);text-shadow:var(--glow2);transition:color var(--trans),text-shadow var(--trans);}
+.ctf-stat .l{font-family:"Share Tech Mono",monospace;font-size:.58rem;letter-spacing:.12em;color:var(--text2);text-transform:uppercase;transition:color var(--trans);}
+.ctf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.2rem;}
+.ctf-card{background:var(--surface);border:1px solid var(--border);padding:1.4rem;position:relative;overflow:hidden;cursor:pointer;transition:all .25s;}
+.ctf-card::before{content:'';position:absolute;top:0;right:0;width:10px;height:10px;border-top:1px solid var(--border2);border-right:1px solid var(--border2);transition:border-color var(--trans);}
+.ctf-card:hover{border-color:var(--accent2);box-shadow:var(--glow2);transform:translateY(-3px);}
+.ctf-card:hover::before{border-color:var(--accent2);}
+.ctf-card h3{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1rem;color:var(--text);margin:.6rem 0 .4rem;transition:color var(--trans);}
+.ctf-card p{font-size:.77rem;color:var(--text2);line-height:1.6;transition:color var(--trans);}
+.diff{font-family:"Share Tech Mono",monospace;font-size:.56rem;letter-spacing:.08em;padding:2px 8px;border:1px solid;transition:all var(--trans);}
+.diff-easy{color:var(--accent2);border-color:var(--accent2);}
+.diff-med{color:var(--accent3);border-color:var(--accent3);}
+.diff-hard{color:var(--danger);border-color:var(--danger);}
+.ctf-footer{display:flex;justify-content:space-between;align-items:center;margin-top:.9rem;padding-top:.75rem;border-top:1px solid var(--border);transition:border-color var(--trans);}
+/* posts list */
+.posts-hero{padding:clamp(2.5rem,6vw,5rem) clamp(1rem,6%,5rem) 1.5rem;border-bottom:1px solid var(--border);transition:border-color var(--trans);}
+.posts-hero h1{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:clamp(2rem,5vw,3.5rem);color:var(--text);transition:color var(--trans);}
+.posts-hero h1 span{color:var(--accent);text-shadow:var(--glow);transition:color var(--trans),text-shadow var(--trans);}
+.filter-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.2rem;}
+.filter-btn{font-family:"Share Tech Mono",monospace;font-size:.6rem;letter-spacing:.08em;border:1px solid var(--border2);padding:5px 13px;color:var(--text2);background:none;text-transform:uppercase;transition:all .2s;}
+.filter-btn:hover,.filter-btn.active{border-color:var(--accent);color:var(--accent);box-shadow:var(--glow);}
+.posts-list{display:flex;flex-direction:column;gap:1rem;}
+.post-row{background:var(--surface);border:1px solid var(--border);padding:1.4rem 1.6rem;display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:center;cursor:pointer;transition:all .25s;}
+.post-row:hover{border-color:var(--accent);box-shadow:var(--glow);transform:translateX(4px);}
+.post-row-num{font-family:"Share Tech Mono",monospace;font-size:.65rem;color:var(--accent);opacity:.5;min-width:28px;transition:color var(--trans);}
+.post-row-content h3{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1.05rem;color:var(--text);margin-bottom:.25rem;transition:color var(--trans);}
+.post-row-content p{font-size:.78rem;color:var(--text2);line-height:1.55;transition:color var(--trans);}
+.post-row-right{text-align:right;flex-shrink:0;}
+/* auth */
+.auth-page{min-height:calc(100vh - 60px);display:flex;align-items:center;justify-content:center;padding:2rem;}
+.auth-box{width:100%;max-width:420px;background:var(--surface);border:1px solid var(--border2);padding:2.5rem;position:relative;overflow:hidden;transition:background var(--trans),border-color var(--trans);}
+.auth-box::before,.auth-box::after{content:'';position:absolute;width:14px;height:14px;transition:border-color var(--trans);}
+.auth-box::before{top:0;right:0;border-top:1px solid var(--accent);border-right:1px solid var(--accent);}
+.auth-box::after{bottom:0;left:0;border-bottom:1px solid var(--accent);border-left:1px solid var(--accent);}
+.auth-title{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1.6rem;color:var(--accent);text-shadow:var(--glow);margin-bottom:.3rem;transition:color var(--trans),text-shadow var(--trans);}
+.auth-sub{font-family:"Share Tech Mono",monospace;font-size:.62rem;letter-spacing:.1em;color:var(--text2);margin-bottom:2rem;transition:color var(--trans);}
+.auth-field{margin-bottom:1.3rem;}
+.auth-field label{display:block;font-family:"Share Tech Mono",monospace;font-size:.62rem;letter-spacing:.12em;color:var(--text2);margin-bottom:.5rem;text-transform:uppercase;transition:color var(--trans);}
+.auth-input{width:100%;background:var(--bg2);border:1px solid var(--border2);padding:.7rem .9rem;font-family:"Share Tech Mono",monospace;font-size:.82rem;color:var(--text);letter-spacing:.05em;outline:none;transition:border-color .2s,box-shadow .2s,background var(--trans),color var(--trans);}
+.auth-input:focus{border-color:var(--accent);box-shadow:var(--glow);}
+.auth-btn{width:100%;background:none;border:1px solid var(--accent);padding:.75rem;font-family:"Share Tech Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);transition:all .2s;margin-top:.4rem;}
+.auth-btn:hover{background:var(--accent);color:var(--bg);box-shadow:var(--glow);}
+.auth-err{font-family:"Share Tech Mono",monospace;font-size:.62rem;letter-spacing:.08em;color:var(--danger);margin-top:.7rem;min-height:1rem;transition:color var(--trans);}
+.auth-hint{font-family:"Share Tech Mono",monospace;font-size:.58rem;color:var(--text2);margin-top:1.5rem;opacity:.55;text-align:center;transition:color var(--trans);}
+/* secret */
+.secret-page{max-width:1260px;margin:0 auto;padding:2.5rem clamp(1rem,6%,5rem) 4rem;}
+.secret-banner{background:var(--surface);border:1px solid var(--danger);padding:1.5rem;margin-bottom:2rem;position:relative;overflow:hidden;transition:background var(--trans);}
+.secret-banner::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--danger),transparent);opacity:.7;}
+.secret-banner h2{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1.4rem;color:var(--danger);margin-bottom:.4rem;transition:color var(--trans);}
+.secret-banner p{font-family:"Share Tech Mono",monospace;font-size:.65rem;letter-spacing:.08em;color:var(--text2);transition:color var(--trans);}
+.secret-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+.secret-card{background:var(--surface);border:1px solid var(--border);padding:1.5rem;transition:all .25s;}
+.secret-card:hover{border-color:var(--danger);box-shadow:0 0 16px rgba(255,51,85,.2);}
+.secret-card h3{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:1rem;color:var(--text);margin-bottom:.5rem;transition:color var(--trans);}
+.secret-card p{font-size:.78rem;color:var(--text2);line-height:1.65;transition:color var(--trans);}
+.secret-badge{font-family:"Share Tech Mono",monospace;font-size:.55rem;letter-spacing:.1em;background:rgba(255,51,85,.12);border:1px solid var(--danger);color:var(--danger);padding:2px 8px;display:inline-block;margin-bottom:.6rem;}
+.logout-btn{font-family:"Share Tech Mono",monospace;font-size:.62rem;letter-spacing:.09em;background:none;border:1px solid var(--border2);padding:4px 12px;color:var(--text2);margin-left:.6rem;transition:all .2s;}
+.logout-btn:hover{border-color:var(--danger);color:var(--danger);}
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--border2);}
 ::-webkit-scrollbar-thumb:hover{background:var(--accent);}
-@media(max-width:950px){nav.desk{display:none;}.menu-btn{display:block;}}
-@media(max-width:580px){.hero-stats{gap:1.5rem;}}
+@media(max-width:960px){nav.desk{display:none;}.menu-btn{display:flex;}.two-col,.article-grid{grid-template-columns:1fr;}.featured{grid-template-columns:1fr;}.feat-vis{min-height:130px;}.about-hero{grid-template-columns:1fr;}.about-section{grid-template-columns:1fr;}.secret-grid{grid-template-columns:1fr;}}
+@media(max-width:600px){.post-grid{grid-template-columns:1fr;}.hero-stats{gap:1.5rem;}.anav{flex-direction:column;}.post-row{grid-template-columns:1fr;gap:.4rem;}.post-row-num{display:none;}.post-row-right{text-align:left;}.ctf-stats{gap:1.2rem;}}
 </style>
 </head>
 <body>
-
 <header>
-  <a href="#" class="logo">
+  <a href="#home" class="logo" onclick="nav('home')">
     <span class="logo-br">[</span>DOUGAN<span class="logo-br">]</span>
-    <span class="cursor"></span>
+    <span class="cursor-blink"></span>
   </a>
-  <nav class="desk">
-    <a href="#posts" data-n="01">POSTS</a>
-    <a href="#ctf" data-n="02">CTF</a>
-    <a href="#about" data-n="03">ABOUT</a>
+  <nav class="desk" id="desk-nav">
+    <a href="#home"  data-page="home"  data-n="00" onclick="nav('home')">HOME</a>
+    <a href="#posts" data-page="posts" data-n="01" onclick="nav('posts')">POSTS</a>
+    <a href="#ctf"   data-page="ctf"   data-n="02" onclick="nav('ctf')">CTF</a>
+    <a href="#about" data-page="about" data-n="03" onclick="nav('about')">ABOUT</a>
   </nav>
   <div class="h-right">
-    <button class="theme-btn" id="theme-btn">
-      <span id="t-icon">☀</span><span id="t-lbl">LIGHT</span>
-    </button>
+    <button class="theme-btn" id="theme-btn"><span id="t-icon">☀</span><span id="t-lbl">LIGHT</span></button>
     <button class="menu-btn" id="menu-btn">MENU</button>
   </div>
 </header>
-
 <nav class="mob-nav" id="mob-nav">
   <button class="mob-close" id="mob-close">✕</button>
-  <a href="#posts" onclick="closeMob()">POSTS</a>
-  <a href="#ctf" onclick="closeMob()">CTF</a>
-  <a href="#about" onclick="closeMob()">ABOUT</a>
+  <a href="#home"  onclick="nav('home');closeMob()">HOME</a>
+  <a href="#posts" onclick="nav('posts');closeMob()">POSTS</a>
+  <a href="#ctf"   onclick="nav('ctf');closeMob()">CTF</a>
+  <a href="#about" onclick="nav('about');closeMob()">ABOUT</a>
 </nav>
-
-<section class="hero">
-  <div class="hero-frame tl"></div>
-  <div class="hero-frame br"></div>
-  <div class="hero-lbl" id="hero-lbl"></div>
-  <h1>HACK THE<br><span class="hl">KNOWLEDGE.</span></h1>
-  <p class="hero-sub"><span class="prompt">$</span>漏洞研究 · CTF 解題 · 技術筆記 · 生活隨筆</p>
-  <div class="hero-stats">
-    <div class="stat"><div class="num">12</div><div class="lbl">POSTS</div></div>
-    <div class="stat"><div class="num">4</div><div class="lbl">CATEGORIES</div></div>
-    <div class="stat"><div class="num">2024</div><div class="lbl">SINCE</div></div>
-  </div>
-  <div class="hex-deco">
-    <svg width="220" height="220" viewBox="0 0 220 220">
-      <g class="hex-ring" style="animation:spinSlow 24s linear infinite;transform-origin:110px 110px;">
-        <polygon points="110,18 192,63 192,157 110,202 28,157 28,63"
-          fill="none" stroke="var(--accent)" stroke-width=".6" opacity=".22"/>
-        <polygon points="110,44 168,77 168,143 110,176 52,143 52,77"
-          fill="none" stroke="var(--accent2)" stroke-width=".6" opacity=".14"/>
-      </g>
-      <text x="110" y="118" text-anchor="middle"
-        font-family="Share Tech Mono,monospace" font-size="22"
-        fill="var(--accent)" opacity=".18">&lt;/&gt;</text>
-    </svg>
-  </div>
-</section>
-
-<div id="posts"></div>
-
-<div class="wrap">
-  <main>
-    <div class="srch">
-      <span class="srch-ico">&gt;_</span>
-      <input type="text" class="srch-inp" id="srch"
-        placeholder="SEARCH :: title / category / tag"/>
-    </div>
-
-    <div class="sec-head"><span class="sn">//</span><h2>FEATURED</h2></div>
-    <article class="featured">
-      <div class="feat-vis">
-        <svg class="ckt" viewBox="0 0 300 230" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">
-          <line x1="0" y1="58" x2="300" y2="58"/>
-          <line x1="0" y1="115" x2="300" y2="115"/>
-          <line x1="0" y1="172" x2="300" y2="172"/>
-          <line x1="60" y1="0" x2="60" y2="230"/>
-          <line x1="150" y1="0" x2="150" y2="230"/>
-          <line x1="240" y1="0" x2="240" y2="230"/>
+<div id="app">
+  <!-- HOME -->
+  <div class="page" id="page-home">
+    <section class="hero">
+      <div class="hero-frame tl"></div><div class="hero-frame br"></div>
+      <div class="hero-lbl" id="hero-lbl"></div>
+      <h1>HACK THE<br><span class="hl">KNOWLEDGE.</span></h1>
+      <p class="hero-sub"><span class="prompt">$</span>漏洞研究 · CTF 解題 · 技術筆記 · 生活隨筆</p>
+      <div class="hero-stats">
+        <div class="stat"><div class="num">12</div><div class="lbl">POSTS</div></div>
+        <div class="stat"><div class="num">4</div><div class="lbl">CATEGORIES</div></div>
+        <div class="stat"><div class="num">2024</div><div class="lbl">SINCE</div></div>
+      </div>
+      <div class="hex-deco">
+        <svg width="220" height="220" viewBox="0 0 220 220">
+          <g class="hex-ring">
+            <polygon points="110,18 192,63 192,157 110,202 28,157 28,63" fill="none" stroke="var(--accent)" stroke-width=".6" opacity=".2"/>
+            <polygon points="110,44 168,77 168,143 110,176 52,143 52,77" fill="none" stroke="var(--accent2)" stroke-width=".6" opacity=".13"/>
+          </g>
+          <text x="110" y="118" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="22" fill="var(--accent)" opacity=".16">&lt;/&gt;</text>
         </svg>
-        <span class="feat-badge">PINNED</span>
-        <div class="feat-ico">{_}</div>
       </div>
-      <div class="feat-body">
-        <div>
-          <div class="post-meta">
-            <span class="chip hi">技術筆記</span>
-            <span class="pdate">2024.03.20</span>
-          </div>
-          <h2>探索 GitHub Pages 的無限可能</h2>
-          <p>極簡部落格模板，去除繁瑣留言板，專注內容呈現。支援響應式佈局與深色模式切換，純 HTML/CSS/JS 實作，零依賴。</p>
-        </div>
-        <a href="#" class="rbtn">READ MORE <span>→</span></a>
-      </div>
-    </article>
-
-    <div class="sec-head" style="margin-top:2rem;"><span class="sn">//</span><h2>LATEST POSTS</h2></div>
-    <div class="pgrid" id="pgrid"></div>
-  </main>
-
-  <aside class="sidebar" id="about">
-    <div class="sc">
-      <div class="status-row"><div class="dot"></div><span class="stxt">SYSTEM ONLINE</span></div>
-      <div class="sinfo">NODE: dougan-blog-v2<br>UPTIME: 99.9%<br>BUILD: production</div>
-    </div>
-    <div class="sc">
-      <h3>// OPERATOR</h3>
-      <div class="av">D</div>
-      <div class="aname">Dougan</div>
-      <div class="arole">SEC_RESEARCHER / DEV</div>
-      <p class="abio">喜歡分享與創作的開發者，專注 CTF 解題與 Web 漏洞研究。</p>
-      <div class="socials">
-        <a href="#" class="sl">GITHUB</a>
-        <a href="#" class="sl">TWITTER</a>
-        <a href="#" class="sl">EMAIL</a>
+    </section>
+    <div class="container">
+      <div class="two-col">
+        <main>
+          <div class="sec-head"><span class="sn">//</span><h2>FEATURED</h2></div>
+          <article class="featured" onclick="openPost(0)" style="cursor:pointer;margin-bottom:2rem;">
+            <div class="feat-vis">
+              <svg class="ckt" viewBox="0 0 300 230" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">
+                <line x1="0" y1="58" x2="300" y2="58"/><line x1="0" y1="115" x2="300" y2="115"/><line x1="0" y1="172" x2="300" y2="172"/>
+                <line x1="60" y1="0" x2="60" y2="230"/><line x1="150" y1="0" x2="150" y2="230"/><line x1="240" y1="0" x2="240" y2="230"/>
+              </svg>
+              <span class="feat-badge">PINNED</span>
+              <div class="feat-ico">{_}</div>
+            </div>
+            <div class="feat-body">
+              <div>
+                <div class="post-meta"><span class="chip hi">技術筆記</span><span class="pdate">2024.03.20</span></div>
+                <h2>探索 GitHub Pages 的無限可能</h2>
+                <p>極簡部落格模板，去除繁瑣留言板，專注內容呈現。支援響應式佈局與深色模式切換，純 HTML/CSS/JS 實作，零依賴。</p>
+              </div>
+              <span class="rbtn">READ MORE <span style="margin-left:.4rem;">→</span></span>
+            </div>
+          </article>
+          <div class="srch-wrap"><span class="srch-ico">&gt;_</span><input type="text" class="srch-inp" id="home-srch" placeholder="SEARCH :: title / category / tag"/></div>
+          <div class="sec-head"><span class="sn">//</span><h2>LATEST POSTS</h2></div>
+          <div class="post-grid" id="home-pgrid"></div>
+        </main>
+        <aside id="sidebar"></aside>
       </div>
     </div>
-    <div class="sc">
-      <h3>// MODULES</h3>
-      <ul class="cat-ul" id="ctf">
-        <li><a href="#"><span># 技術筆記</span><span class="cc">05</span></a></li>
-        <li><a href="#"><span># 生活隨筆</span><span class="cc">03</span></a></li>
-        <li><a href="#"><span># CTF</span><span class="cc">02</span></a></li>
-        <li><a href="#"><span># 漏洞專區</span><span class="cc">02</span></a></li>
-      </ul>
+  </div>
+  <!-- POSTS -->
+  <div class="page" id="page-posts">
+    <div class="posts-hero">
+      <h1>ALL <span>POSTS</span></h1>
+      <p style="font-family:'Share Tech Mono',monospace;font-size:.72rem;color:var(--text2);margin-top:.6rem;transition:color var(--trans);"><span class="prompt">$</span> 所有文章 — 技術、生活、漏洞、CTF</p>
+      <div class="filter-row" id="filter-row"></div>
     </div>
-    <div class="sc">
-      <h3>// TAGS</h3>
-      <div class="tags" id="tags"></div>
+    <div class="container" style="padding-top:1.8rem;">
+      <div class="srch-wrap"><span class="srch-ico">&gt;_</span><input type="text" class="srch-inp" id="posts-srch" placeholder="SEARCH :: 搜尋所有文章…"/></div>
+      <div class="posts-list" id="posts-list"></div>
     </div>
-    <div class="sc">
-      <h3>// HOT LIST</h3>
-      <div class="rec-ul" id="recs"></div>
+  </div>
+  <!-- POST DETAIL -->
+  <div class="page" id="page-post-detail">
+    <div class="article-wrap">
+      <div class="article-grid">
+        <article>
+          <div class="breadcrumb" id="article-bc"></div>
+          <div class="post-meta" id="article-meta"></div>
+          <h1 class="article-h1" id="article-title"></h1>
+          <div class="article-body" id="article-body"></div>
+          <div class="article-tags" id="article-tags"></div>
+          <div class="anav" id="article-nav"></div>
+        </article>
+        <aside id="article-sidebar"></aside>
+      </div>
     </div>
-  </aside>
+  </div>
+  <!-- CTF -->
+  <div class="page" id="page-ctf">
+    <div class="ctf-hero">
+      <h1>CTF <span>WRITEUPS</span></h1>
+      <p><span class="prompt">$</span> 解題紀錄 · exploit · 心得</p>
+      <div class="ctf-stats">
+        <div class="ctf-stat"><div class="n">8</div><div class="l">TOTAL</div></div>
+        <div class="ctf-stat"><div class="n">3</div><div class="l">PWN</div></div>
+        <div class="ctf-stat"><div class="n">3</div><div class="l">WEB</div></div>
+        <div class="ctf-stat"><div class="n">2</div><div class="l">MISC</div></div>
+      </div>
+    </div>
+    <div class="container" style="padding-top:2rem;"><div class="ctf-grid" id="ctf-grid"></div></div>
+  </div>
+  <!-- ABOUT -->
+  <div class="page" id="page-about">
+    <div class="about-hero">
+      <div class="about-avatar">D</div>
+      <div class="about-info">
+        <h1>Dougan</h1>
+        <div class="about-role">SEC_RESEARCHER / FULL_STACK_DEV / CTF_PLAYER</div>
+        <p>熱愛資訊安全與開發的工程師。專注於 Web 漏洞研究、CTF 解題，同時也喜歡分享技術筆記與生活隨筆。目前活躍於各大 CTF 競賽，研究方向涵蓋 Web Security、Binary Exploitation 與 Reverse Engineering。</p>
+        <div class="about-links"><a href="#" class="sl">GITHUB</a><a href="#" class="sl">TWITTER</a><a href="#" class="sl">EMAIL</a><a href="#" class="sl">LINKEDIN</a></div>
+      </div>
+    </div>
+    <div class="about-section">
+      <div>
+        <div class="skill-card"><h3>// SKILLS</h3><div id="skills-list"></div></div>
+        <div class="skill-card" style="margin-top:1.2rem;"><h3>// TOOLS &amp; TECH</h3><div class="tags-cloud" style="margin-top:.3rem;"><span class="ti">Python</span><span class="ti">JavaScript</span><span class="ti">C/C++</span><span class="ti">Burp Suite</span><span class="ti">GDB / pwndbg</span><span class="ti">IDA Pro</span><span class="ti">Docker</span><span class="ti">Linux</span><span class="ti">Git</span><span class="ti">pwntools</span><span class="ti">sqlmap</span><span class="ti">Metasploit</span></div></div>
+      </div>
+      <div><div class="skill-card"><h3>// EXPERIENCE</h3><div class="timeline" id="timeline"></div></div></div>
+    </div>
+  </div>
+  <!-- LOGIN -->
+  <div class="page" id="page-login">
+    <div class="auth-page">
+      <div class="auth-box" id="auth-box">
+        <div class="auth-title">// ACCESS</div>
+        <div class="auth-sub">&gt;_ AUTHENTICATION REQUIRED</div>
+        <div class="auth-field"><label>USERNAME</label><input type="text" class="auth-input" id="auth-user" placeholder="enter username" autocomplete="off"/></div>
+        <div class="auth-field"><label>PASSWORD</label><input type="password" class="auth-input" id="auth-pass" placeholder="••••••••" autocomplete="off"/></div>
+        <button class="auth-btn" onclick="doLogin()">AUTHENTICATE →</button>
+        <div class="auth-err" id="auth-err"></div>
+        <div class="auth-hint">// Try: dougan / d0ug4n</div>
+      </div>
+    </div>
+  </div>
+  <!-- SECRET -->
+  <div class="page" id="page-secret">
+    <div class="secret-page">
+      <div class="secret-banner">
+        <h2>⚠ RESTRICTED ACCESS — OPERATOR ONLY</h2>
+        <p>&gt;_ You have authenticated successfully. Welcome to the operator dashboard.</p>
+      </div>
+      <div class="sec-head"><span class="sn" style="color:var(--danger);">//</span><h2>PRIVATE NOTES</h2></div>
+      <div class="secret-grid">
+        <div class="secret-card"><div class="secret-badge">CLASSIFIED</div><h3>未公開漏洞研究 #001</h3><p>某知名平台的 SSRF + Internal IDOR 組合利用，可繞過 WAF 存取內部 metadata service，獲取 cloud credentials。已回報廠商，awaiting patch。</p></div>
+        <div class="secret-card"><div class="secret-badge">DRAFT</div><h3>CTF 解法草稿 — Kernel PWN</h3><p>利用 userfaultfd + race condition 實現 kernel exploit，達成 LPE。目前僅在本地環境測試成功，尚未撰寫完整 writeup。</p></div>
+        <div class="secret-card"><div class="secret-badge">PRIVATE</div><h3>滲透測試報告模板</h3><p>個人使用的滲透測試報告模板，包含 Executive Summary、技術細節、CVSS 評分、修補建議等章節。</p></div>
+        <div class="secret-card"><div class="secret-badge">INTERNAL</div><h3>工具清單 &amp; 配置備份</h3><p>Burp Suite Pro 外掛清單、GDB 設定檔、pwndbg 插件設定，以及自動化 recon 腳本的私有 Gist 連結集合。</p></div>
+      </div>
+      <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+        <span style="font-family:'Share Tech Mono',monospace;font-size:.63rem;color:var(--text2);">SESSION ACTIVE · OPERATOR: dougan</span>
+        <button class="logout-btn" onclick="doLogout()">LOGOUT</button>
+      </div>
+    </div>
+  </div>
 </div>
-
 <footer>
   <div class="fl">© 2024 DOUGAN // ALL RIGHTS RESERVED</div>
   <div class="fr">
-    <a href="#">GITHUB</a><a href="#">RSS</a><a href="#">CONTACT</a>
+    <a href="#">GITHUB</a><a href="#">RSS</a>
+    <a href="#login" onclick="nav('login');return false;" style="color:var(--danger);opacity:.35;font-size:.55rem;" title="operator access">⬡</a>
   </div>
 </footer>
-
 <script>
-const posts=[
-  {id:1,date:"2024.03.15",cat:"技術筆記",tag:"CSS",title:"為什麼我選擇簡約設計？",desc:"在資訊爆炸的時代，乾淨的介面能讓讀者更專注於文字本身。這份 HTML 完全不依賴外部資料庫。",d:.45},
-  {id:2,date:"2024.03.10",cat:"CTF",tag:"PWN",title:"2024 AIS3 Pre-exam Writeup",desc:"本次涵蓋 pwn、web 與 misc 題目，本文記錄解題過程與心得，附完整 exploit 腳本。",d:.5},
-  {id:3,date:"2024.03.05",cat:"漏洞專區",tag:"Web",title:"SSRF 攻擊入門與防禦實踐",desc:"Server-Side Request Forgery 是近年常見的 Web 漏洞，從原理到實際利用一次搞懂。",d:.55},
-  {id:4,date:"2024.02.28",cat:"技術筆記",tag:"JS",title:"Vanilla JS 暗色模式切換",desc:"不依賴任何框架，20 行 JS 與 CSS 變數實作主題切換，並記住使用者偏好。",d:.6},
-  {id:5,date:"2024.02.20",cat:"生活隨筆",tag:"想法",title:"程式設計師的閱讀清單 2024",desc:"整理今年啟發最大的技術書單，包含系統設計、資安及軟技能相關內容。",d:.65},
-  {id:6,date:"2024.02.10",cat:"CTF",tag:"SQLi",title:"CTF Web：SQL Injection 進階技巧",desc:"盲注、時間型注入、二次注入，常見 CTF SQL 注入題型與解法整理。",d:.7},
+const POSTS=[
+  {id:0,date:"2024.03.20",cat:"技術筆記",tag:"HTML/CSS",title:"探索 GitHub Pages 的無限可能",desc:"極簡部落格模板，去除繁瑣留言板，專注內容呈現。支援響應式佈局與深色模式切換，純 HTML/CSS/JS 實作，零依賴。",body:`<h2>前言</h2><p>在開始之前，先說說為什麼選擇 GitHub Pages 作為部落格平台。GitHub Pages 提供免費的靜態網站託管，搭配自訂網域後完全不需要任何費用。最重要的是，所有內容都用 Git 管理，版本控制超方便。</p><h2>核心架構</h2><p>這個模板完全不依賴任何框架或後端服務。所有功能都用原生 HTML、CSS 和 JavaScript 實作，loading 速度極快，SEO 也相對容易優化。</p><pre><code>// 主題切換核心邏輯\nconst html = document.documentElement;\nconst saved = localStorage.getItem('theme');\nif (saved) html.setAttribute('data-theme', saved);</code></pre><h2>深色模式實作</h2><p>使用 CSS Custom Properties 搭配 data-theme 屬性切換，所有顏色在一個地方管理，維護非常方便。切換時加上 CSS transition 讓過渡動畫更流暢。</p><h2>響應式設計</h2><p>使用 CSS Grid 搭配 clamp() 函數做流體尺寸，在手機、平板、桌機三個尺寸都能有良好的閱讀體驗。完全沒有依賴任何 CSS 框架。</p>`},
+  {id:1,date:"2024.03.15",cat:"技術筆記",tag:"CSS",title:"為什麼我選擇簡約設計？",desc:"在資訊爆炸的時代，乾淨的介面能讓讀者更專注於文字本身。這份 HTML 完全不依賴外部資料庫。",body:`<h2>簡約的核心理念</h2><p>在設計任何介面之前，我都會問自己一個問題：「這個元素存在的理由是什麼？」如果回答不了，就把它刪掉。這個原則讓我的設計越來越乾淨。</p><h2>科技感的來源</h2><p>科技感不等於複雜。真正有科技感的設計往往非常克制——少量的霓虹色彩、精心選擇的等寬字體、精確的間距，比堆疊大量特效更有震撼力。</p><h3>字體選擇</h3><p>等寬字體天生帶有終端機、程式碼的氣息。搭配無襯線體做正文，形成強烈的視覺對比，又不失可讀性。</p><h2>顏色理論</h2><p>整個配色只需要：一個背景色、一個表面色、一個主色調、一個強調色。超過這個數量就會顯得雜亂。CSS 變數讓暗色/亮色模式的切換變得極其簡單。</p>`},
+  {id:2,date:"2024.03.10",cat:"CTF",tag:"PWN",title:"2024 AIS3 Pre-exam Writeup",desc:"本次涵蓋 pwn、web 與 misc 題目，本文記錄解題過程與心得，附完整 exploit 腳本。",body:`<h2>比賽概況</h2><p>AIS3 Pre-exam 是台灣資安訓練課程 AIS3 的入學考試，題目涵蓋 pwn、web、reverse、misc 等類別。今年難度明顯提升，pwn 題出現了 kernel exploitation 相關考點。</p><h2>PWN — ret2libc</h2><p>這題是經典的 buffer overflow，目標是透過 ret2libc 呼叫 system("/bin/sh")。</p><pre><code>from pwn import *\n\nelf = ELF('./chal')\nlibc = ELF('./libc.so.6')\np = process('./chal')\n\npayload = b'A' * 72\npayload += p64(elf.plt['puts'])\np.sendline(payload)\np.interactive()</code></pre><h2>WEB — SQL Injection</h2><p>登入頁面存在明顯的 SQL injection，使用 OR 1=1-- 即可繞過，但 flag 需要進一步 UNION-based 注入從資料庫取出。</p><h2>MISC — Steganography</h2><p>圖片隱寫，使用 zsteg 工具即可找到隱藏在 LSB 的 flag。</p>`},
+  {id:3,date:"2024.03.05",cat:"漏洞專區",tag:"Web",title:"SSRF 攻擊入門與防禦實踐",desc:"Server-Side Request Forgery 是近年常見的 Web 漏洞，從原理到實際利用一次搞懂。",body:`<h2>什麼是 SSRF？</h2><p>Server-Side Request Forgery（SSRF）是一種讓攻擊者能夠讓伺服器代為發起請求的漏洞。攻擊者透過操控伺服器的 HTTP 請求目標，存取原本不應該公開的內部資源。</p><h2>常見攻擊場景</h2><p>最經典的案例是 AWS 的 Instance Metadata Service（IMDS）。透過 SSRF 存取 http://169.254.169.254/latest/meta-data/iam/security-credentials/ 可以取得臨時 IAM 憑證，進而接管整個 AWS 帳號。</p><pre><code>// 典型 SSRF payload\nurl=http://169.254.169.254/latest/meta-data/\nurl=http://localhost:6379/  // Redis\nurl=http://internal.corp.com/admin/</code></pre><h2>Bypass 技巧</h2><p>許多開發者會做黑名單過濾，但常見的 bypass 方法包括：IP 進位轉換（2130706433 → 127.0.0.1）、使用 IPv6（[::1]）、DNS rebinding 等。</p><h2>防禦方案</h2><p>正確的防禦應採用白名單而非黑名單，驗證解析後的 IP 而非 URL 字串，並考慮在獨立的 sandbox 環境中執行對外請求。</p>`},
+  {id:4,date:"2024.02.28",cat:"技術筆記",tag:"JS",title:"Vanilla JS 暗色模式切換",desc:"不依賴任何框架，20 行 JS 與 CSS 變數實作主題切換，並記住使用者偏好。",body:`<h2>方法論</h2><p>暗色模式切換有很多種實作方式，最簡潔的是利用 CSS Custom Properties 搭配 HTML 根元素的 data-theme 屬性。這樣只需要一份 CSS，不需要載入兩套樣式表。</p><h2>CSS 架構</h2><pre><code>:root {\n  --bg: #ffffff;\n  --text: #000000;\n}\n[data-theme="dark"] {\n  --bg: #0a0a0a;\n  --text: #eeeeee;\n}</code></pre><h2>JavaScript 邏輯</h2><pre><code>const html = document.documentElement;\nconst saved = localStorage.getItem('theme') || 'light';\nhtml.setAttribute('data-theme', saved);\n\ndocument.getElementById('toggle').addEventListener('click', () => {\n  const next = html.dataset.theme === 'dark' ? 'light' : 'dark';\n  html.setAttribute('data-theme', next);\n  localStorage.setItem('theme', next);\n});</code></pre><h2>進階：系統偏好偵測</h2><p>可以透過 prefers-color-scheme media query 偵測使用者的系統設定，在首次造訪時自動套用對應主題，提升使用者體驗。</p>`},
+  {id:5,date:"2024.02.20",cat:"生活隨筆",tag:"想法",title:"程式設計師的閱讀清單 2024",desc:"整理今年啟發最大的技術書單，包含系統設計、資安及軟技能相關內容。",body:`<h2>前言</h2><p>2024 年閱讀了不少書，選幾本對我影響最大的分享。選書標準是「讀完後思考方式有沒有改變」，而不是流行程度。</p><h2>技術類</h2><h3>The Art of Exploitation</h3><p>Jon Erickson 的經典作。從 C 語言底層到 shellcode 撰寫，再到 heap 和 format string 漏洞，完整建立了我對二進位利用的底層認識。強烈推薦給每個對 pwn 有興趣的人。</p><h3>Web Application Hacker's Handbook</h3><p>Web 安全的聖經級別書籍，雖然年代稍久，但核心概念到今天仍然適用。</p><h2>軟技能類</h2><h3>A Mind for Numbers</h3><p>Barbara Oakley 的學習科學書籍。「專注模式」與「發散模式」的概念讓我重新理解學習的本質。</p>`},
+  {id:6,date:"2024.02.10",cat:"CTF",tag:"SQLi",title:"CTF Web：SQL Injection 進階技巧",desc:"盲注、時間型注入、二次注入，常見 CTF SQL 注入題型與解法整理。",body:`<h2>SQL Injection 分類</h2><p>SQL Injection 大致分為三類：Error-based、Union-based、Blind（包含 Boolean-based 和 Time-based）。在 CTF 中，三種都很常見，通常會搭配 WAF bypass。</p><h2>Boolean-based Blind</h2><pre><code>' AND SUBSTRING((SELECT flag FROM flags LIMIT 1),1,1)='f'--\n\n// 自動化腳本\nimport requests, string\nflag = ''\nfor i in range(1, 50):\n    for c in string.printable:\n        payload = f"' AND SUBSTRING((SELECT flag),{i},1)='{c}'--"\n        # send and check response</code></pre><h2>Time-based Blind</h2><p>當頁面回應無法反映查詢結果時，改用時間差判斷。MySQL 用 SLEEP()，MSSQL 用 WAITFOR DELAY，Oracle 用 dbms_pipe.receive_message。</p><h2>二次注入</h2><p>二次注入是指惡意 payload 先被存入資料庫，之後在另一個查詢中被取出並執行。常見於「更改密碼」功能——先以 admin'-- 為使用者名稱註冊，再透過更改密碼功能實際修改 admin 的密碼。</p>`},
 ];
-const tagList=["JavaScript","HTML/CSS","CTF","PWN","Web","資安","SQLi","SSRF","靜態網站","開發筆記","Linux","Python"];
+const CTF_CARDS=[
+  {title:"AIS3 Pre-exam 2024",cat:"PWN / WEB",diff:"med",date:"2024.03",desc:"年度資安訓練選拔賽，取得正式課程資格。涵蓋 ret2libc、SQL injection、LSB steganography。"},
+  {title:"HITCON CTF 2023",cat:"PWN",diff:"hard",date:"2023.11",desc:"Kernel UAF exploit，利用 userfaultfd 完成 race condition，最終 LPE 至 root。"},
+  {title:"DEF CON CTF Qualifier",cat:"WEB",diff:"hard",date:"2023.05",desc:"GraphQL introspection bypass + SSRF，配合 internal API 取得 flag。"},
+  {title:"picoCTF 2024",cat:"MISC / WEB",diff:"easy",date:"2024.03",desc:"新手友善競賽，共解出 32 題，首次接觸 RSA factoring 相關密碼學題型。"},
+  {title:"TSJ CTF 2024",cat:"PWN",diff:"hard",date:"2024.01",desc:"Heap exploitation，利用 tcache poisoning 完成 arbitrary write，取得 shell。"},
+  {title:"CakeCTF 2023",cat:"WEB / MISC",diff:"med",date:"2023.09",desc:"SSTI 配合 filter bypass，讀取 /flag 檔案。"},
+  {title:"GoogleCTF 2023",cat:"WEB",diff:"hard",date:"2023.06",desc:"Chrome extension CSP bypass，透過 postMessage 竊取跨 origin 的 token。"},
+  {title:"AngstromCTF 2024",cat:"WEB / PWN",diff:"med",date:"2024.04",desc:"多題混合，包含 prototype pollution、format string bug，隊伍最終排名前20%。"},
+];
+const SKILLS=[{name:"Web Exploitation",pct:90},{name:"Binary Exploitation",pct:75},{name:"Reverse Engineering",pct:65},{name:"JavaScript / HTML",pct:88},{name:"Python",pct:85},{name:"Linux / Bash",pct:82}];
+const TIMELINE=[{date:"2024",title:"AIS3 資安夏令營",sub:"通過選拔，參加為期一週的密集資安訓練。"},{date:"2023",title:"開始 CTF 競賽",sub:"加入校內資安社，開始參加國內外 CTF 比賽。"},{date:"2023",title:"取得 CEH 認證",sub:"Certified Ethical Hacker，建立系統化的滲透測試知識體系。"},{date:"2022",title:"Bug Bounty 首個回報",sub:"在某知名平台發現 XSS 漏洞，成功回報並取得致謝。"},{date:"2021",title:"開始學習資安",sub:"從 CTF 新手村與 HackTheBox 開始，正式踏入資安領域。"}];
+const TAGS=["JavaScript","HTML/CSS","CTF","PWN","Web","資安","SQLi","SSRF","靜態網站","開發筆記","Linux","Python"];
 
-function renderPosts(list){
-  const g=document.getElementById('pgrid');
-  if(!list.length){
-    const q=document.getElementById('srch').value;
-    g.innerHTML=`<div class="no-res">// NO RESULTS FOR <span>"${q}"</span></div>`;return;
+let currentPage='', authed=sessionStorage.getItem('dg-auth')==='1', currentFilter='ALL';
+
+function nav(page,extra){
+  if(page==='secret'&&!authed){nav('login');return;}
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const el=document.getElementById('page-'+page);
+  if(!el)return;
+  el.classList.add('active');
+  currentPage=page;
+  window.scrollTo(0,0);
+  document.querySelectorAll('nav.desk a').forEach(a=>a.classList.toggle('active',a.dataset.page===page));
+  if(page==='home')initHome();
+  else if(page==='posts')initPosts();
+  else if(page==='post-detail')initPostDetail(extra);
+  else if(page==='ctf')initCTF();
+  else if(page==='about')initAbout();
+  else if(page==='login')initLogin();
+}
+
+window.addEventListener('hashchange',routeHash);
+function routeHash(){
+  const h=location.hash.replace('#','')||'home';
+  if(h.startsWith('post/')){const id=parseInt(h.split('/')[1]);nav('post-detail',id);}
+  else{nav(h);}
+}
+
+function sidebarHTML(){
+  return`<div class="sc"><div class="status-row"><div class="dot"></div><span class="stxt">SYSTEM ONLINE</span></div><div class="sinfo">NODE: dougan-blog-v2<br>UPTIME: 99.9%<br>BUILD: production</div></div>
+<div class="sc"><h3>// OPERATOR</h3><div class="av">D</div><div class="aname">Dougan</div><div class="arole">SEC_RESEARCHER / DEV</div><p class="abio">喜歡分享與創作的開發者，專注 CTF 解題與 Web 漏洞研究。</p><div class="socials"><a href="#" class="sl">GITHUB</a><a href="#" class="sl">TWITTER</a><a href="#" class="sl">EMAIL</a></div></div>
+<div class="sc"><h3>// MODULES</h3><ul class="cat-ul"><li><a href="#" onclick="nav('posts');filterCat('技術筆記');return false;"><span># 技術筆記</span><span class="cc">04</span></a></li><li><a href="#" onclick="nav('ctf');return false;"><span># CTF</span><span class="cc">08</span></a></li><li><a href="#" onclick="nav('posts');filterCat('漏洞專區');return false;"><span># 漏洞專區</span><span class="cc">02</span></a></li><li><a href="#" onclick="nav('posts');filterCat('生活隨筆');return false;"><span># 生活隨筆</span><span class="cc">01</span></a></li></ul></div>
+<div class="sc"><h3>// TAGS</h3><div class="tags-cloud">${TAGS.map(t=>`<span class="ti" onclick="nav('posts');setTimeout(()=>{const i=document.getElementById('posts-srch');i.value='${t}';i.dispatchEvent(new Event('input'));},50);">${t}</span>`).join('')}</div></div>
+<div class="sc"><h3>// HOT LIST</h3><div class="rec-ul">${POSTS.slice(0,4).map((p,i)=>`<div class="ri" onclick="openPost(${p.id})"><span class="ri-n">0${i+1}</span><div class="ri-t">${p.title}</div></div>`).join('')}</div></div>`;
+}
+
+let heroTyped=false;
+function initHome(){
+  document.getElementById('sidebar').innerHTML=sidebarHTML();
+  renderHomePosts(POSTS);
+  if(!heroTyped){
+    heroTyped=true;
+    const lbl=document.getElementById('hero-lbl');
+    const txt='>_ INITIALIZING BLOG SYSTEM v2.4.1';
+    let ci=0;lbl.textContent='';
+    setTimeout(()=>{const iv=setInterval(()=>{lbl.textContent=txt.slice(0,++ci);if(ci>=txt.length)clearInterval(iv);},26);},350);
   }
-  g.innerHTML=list.map(p=>`
-    <article class="card" style="animation-delay:${p.d}s">
-      <div class="scan"></div>
-      <div class="post-meta">
-        <span class="chip hi">${p.cat}</span>
-        <span class="pdate">${p.date}</span>
-      </div>
-      <h3>${p.title}</h3>
-      <p>${p.desc}</p>
-      <div class="cfoot">
-        <span class="chip"># ${p.tag}</span>
-        <a href="#" class="rbtn">READ <span>→</span></a>
-      </div>
-    </article>`).join('');
-}
-renderPosts(posts);
-
-document.getElementById('tags').innerHTML=
-  tagList.map(t=>`<span class="ti" onclick="filterTag('${t}')">${t}</span>`).join('');
-
-document.getElementById('recs').innerHTML=
-  posts.slice(0,4).map((p,i)=>`
-    <div class="ri">
-      <span class="ri-n">0${i+1}</span>
-      <div class="ri-t">${p.title}</div>
-    </div>`).join('');
-
-document.getElementById('srch').addEventListener('input',e=>{
-  const q=e.target.value.trim().toLowerCase();
-  if(!q){renderPosts(posts);return;}
-  renderPosts(posts.filter(p=>
-    p.title.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q)||
-    p.cat.toLowerCase().includes(q)||p.tag.toLowerCase().includes(q)));
-});
-
-function filterTag(t){
-  const i=document.getElementById('srch');
-  i.value=t;i.dispatchEvent(new Event('input'));
-  document.getElementById('posts').scrollIntoView({behavior:'smooth'});
+  const si=document.getElementById('home-srch');
+  si.oninput=e=>{
+    const q=e.target.value.trim().toLowerCase();
+    renderHomePosts(q?POSTS.filter(p=>p.title.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q)||p.cat.toLowerCase().includes(q)||p.tag.toLowerCase().includes(q)):POSTS);
+  };
 }
 
-// THEME
+function renderHomePosts(list){
+  const g=document.getElementById('home-pgrid');
+  if(!list.length){g.innerHTML=`<div class="no-res">// NO RESULTS <span>FOUND</span></div>`;return;}
+  g.innerHTML=list.slice(0,6).map((p,i)=>`<article class="card" style="animation-delay:${.1+i*.06}s" onclick="openPost(${p.id})"><div class="scan-line"></div><div class="post-meta"><span class="chip hi">${p.cat}</span><span class="pdate">${p.date}</span></div><h3>${p.title}</h3><p class="clamp3">${p.desc}</p><div class="card-foot"><span class="chip"># ${p.tag}</span><span class="rbtn">READ <span>→</span></span></div></article>`).join('');
+}
+
+function openPost(id){nav('post-detail',id);location.hash='post/'+id;}
+
+function initPostDetail(id){
+  const p=POSTS[id]||POSTS[0];
+  document.getElementById('article-bc').innerHTML=`<a href="#home" onclick="nav('home')">HOME</a> / <a href="#posts" onclick="nav('posts')">POSTS</a> / ${p.title}`;
+  document.getElementById('article-meta').innerHTML=`<span class="chip hi">${p.cat}</span><span class="chip"># ${p.tag}</span><span class="pdate">${p.date}</span>`;
+  document.getElementById('article-title').textContent=p.title;
+  document.getElementById('article-body').innerHTML=p.body;
+  document.getElementById('article-tags').innerHTML=[p.cat,p.tag,...TAGS.slice(0,3)].map(t=>`<span class="ti">${t}</span>`).join('');
+  const prev=POSTS[id-1],next=POSTS[id+1];
+  document.getElementById('article-nav').innerHTML=`${prev?`<div class="anav-btn" onclick="openPost(${prev.id})"><div class="anav-lbl">← PREV</div><div class="anav-title">${prev.title}</div></div>`:'<div></div>'}${next?`<div class="anav-btn" style="text-align:right" onclick="openPost(${next.id})"><div class="anav-lbl">NEXT →</div><div class="anav-title">${next.title}</div></div>`:'<div></div>'}`;
+  document.getElementById('article-sidebar').innerHTML=sidebarHTML();
+}
+
+function initPosts(){
+  const cats=['ALL',...new Set(POSTS.map(p=>p.cat))];
+  document.getElementById('filter-row').innerHTML=cats.map(c=>`<button class="filter-btn${c===currentFilter?' active':''}" onclick="filterCat('${c}')">${c}</button>`).join('');
+  renderPostsList(POSTS);
+  document.getElementById('posts-srch').oninput=e=>{
+    const q=e.target.value.trim().toLowerCase();
+    const base=currentFilter==='ALL'?POSTS:POSTS.filter(p=>p.cat===currentFilter);
+    renderPostsList(q?base.filter(p=>p.title.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q)||p.tag.toLowerCase().includes(q)):base);
+  };
+}
+
+function filterCat(cat){
+  currentFilter=cat;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',b.textContent===cat));
+  renderPostsList(cat==='ALL'?POSTS:POSTS.filter(p=>p.cat===cat));
+  const si=document.getElementById('posts-srch');
+  if(si)si.value='';
+}
+
+function renderPostsList(list){
+  const el=document.getElementById('posts-list');
+  if(!list.length){el.innerHTML=`<div class="no-res">// NO RESULTS <span>FOUND</span></div>`;return;}
+  el.innerHTML=list.map((p,i)=>`<div class="post-row" onclick="openPost(${p.id})"><div class="post-row-num">0${i+1}</div><div class="post-row-content"><h3>${p.title}</h3><p>${p.desc}</p><div class="post-meta" style="margin-top:.5rem;margin-bottom:0;"><span class="chip hi">${p.cat}</span><span class="chip"># ${p.tag}</span><span class="pdate">${p.date}</span></div></div><div class="post-row-right"><span class="rbtn">READ →</span></div></div>`).join('');
+}
+
+function initCTF(){
+  document.getElementById('ctf-grid').innerHTML=CTF_CARDS.map((c,i)=>`<div class="ctf-card" style="animation-delay:${.08+i*.05}s;"><div class="post-meta"><span class="diff diff-${c.diff}">${c.diff.toUpperCase()}</span><span class="pdate">${c.date}</span></div><h3>${c.title}</h3><p>${c.desc}</p><div class="ctf-footer"><span class="chip">${c.cat}</span><span class="rbtn">DETAILS →</span></div></div>`).join('');
+}
+
+function initAbout(){
+  document.getElementById('skills-list').innerHTML=SKILLS.map(s=>`<div class="skill-bar-wrap"><div class="skill-name"><span>${s.name}</span><span>${s.pct}%</span></div><div class="skill-bar"><div class="skill-fill" style="width:${s.pct}%"></div></div></div>`).join('');
+  document.getElementById('timeline').innerHTML=TIMELINE.map(t=>`<div class="tl-item"><div class="tl-date">${t.date}</div><div class="tl-title">${t.title}</div><div class="tl-sub">${t.sub}</div></div>`).join('');
+}
+
+const CREDS={user:'dougan',pass:'d0ug4n'};
+function initLogin(){
+  document.getElementById('auth-err').textContent='';
+  document.getElementById('auth-user').value='';
+  document.getElementById('auth-pass').value='';
+  ['auth-user','auth-pass'].forEach(id=>{document.getElementById(id).onkeydown=e=>{if(e.key==='Enter')doLogin();};});
+}
+function doLogin(){
+  const u=document.getElementById('auth-user').value.trim();
+  const p=document.getElementById('auth-pass').value;
+  const err=document.getElementById('auth-err');
+  if(u===CREDS.user&&p===CREDS.pass){
+    authed=true;sessionStorage.setItem('dg-auth','1');err.textContent='';nav('secret');
+  }else{
+    err.textContent='// ACCESS DENIED: invalid credentials';
+    document.getElementById('auth-pass').value='';
+    const box=document.getElementById('auth-box');
+    box.style.borderColor='var(--danger)';box.style.boxShadow='0 0 20px rgba(255,51,85,.3)';
+    setTimeout(()=>{box.style.borderColor='';box.style.boxShadow='';},1000);
+  }
+}
+function doLogout(){authed=false;sessionStorage.removeItem('dg-auth');nav('home');}
+
 const html=document.documentElement;
 const tBtn=document.getElementById('theme-btn');
 const tIcon=document.getElementById('t-icon');
 const tLbl=document.getElementById('t-lbl');
-function applyTheme(t){
-  html.setAttribute('data-theme',t);
-  tIcon.textContent=t==='dark'?'☀':'☾';
-  tLbl.textContent=t==='dark'?'LIGHT':'DARK';
-}
+function applyTheme(t){html.setAttribute('data-theme',t);tIcon.textContent=t==='dark'?'☀':'☾';tLbl.textContent=t==='dark'?'LIGHT':'DARK';}
 applyTheme(localStorage.getItem('dg-theme')||'dark');
-tBtn.addEventListener('click',()=>{
-  const n=html.getAttribute('data-theme')==='dark'?'light':'dark';
-  applyTheme(n);localStorage.setItem('dg-theme',n);
-});
+tBtn.addEventListener('click',()=>{const n=html.getAttribute('data-theme')==='dark'?'light':'dark';applyTheme(n);localStorage.setItem('dg-theme',n);});
 
-// MOB NAV
-document.getElementById('menu-btn').addEventListener('click',()=>
-  document.getElementById('mob-nav').classList.toggle('open'));
+document.getElementById('menu-btn').addEventListener('click',()=>document.getElementById('mob-nav').classList.toggle('open'));
 document.getElementById('mob-close').addEventListener('click',closeMob);
 function closeMob(){document.getElementById('mob-nav').classList.remove('open');}
 
-// TYPING
-const lbl=document.getElementById('hero-lbl');
-const txt='>_ INITIALIZING BLOG SYSTEM v2.4.1';
-let ci=0;
-setTimeout(()=>{
-  const iv=setInterval(()=>{lbl.textContent=txt.slice(0,++ci);if(ci>=txt.length)clearInterval(iv);},26);
-},350);
+routeHash();
+if(!currentPage)nav('home');
 </script>
 </body>
 </html>
